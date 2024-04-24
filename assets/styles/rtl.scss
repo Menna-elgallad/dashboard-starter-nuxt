@@ -1,0 +1,52 @@
+[dir="rtl"] {
+    #allTheNav {
+        .nav2 {
+            left : unset !important ;
+            right : 0
+        }
+    }
+    .marginedStart{
+        margin-left: unset !important;
+        margin-right: 260px !important;
+    }
+    .collapseMargin{
+        margin-left: unset !important ;
+        margin-right: 80px !important;
+    }
+    // elment-plus
+    .el-menu.el-menu-vertical-demo{
+        border-left: solid 1px var(--el-menu-border-color);
+        padding-left: unset !important;
+        padding-right: 5px ;
+        .el-menu-item [class^=el-icon] ,.el-sub-menu .el-icon {
+            margin-right: unset !important;
+            margin-left: 8px !important;
+        }
+        .el-sub-menu__icon-arrow {
+            left:  var(--el-menu-base-level-padding);
+            right:  unset !important;
+            margin-left: unset !important;
+        }
+        .el-sub-menu__title{
+            padding-left: unset !important;
+            padding-right: calc(var(--el-menu-base-level-padding) + var(--el-menu-level)* var(--el-menu-level-padding)) !important;
+        }
+    }
+    .vue-tel-input{
+        direction: ltr !important;
+        .vti__input {
+            
+            padding-right: 24px;
+            direction: rtl;
+        }
+    }
+    .el-input__prefix-inner > :last-child {
+        margin-left: 8px !important;
+        margin-right: unset !important;
+    }
+    .el-table .cell{
+        text-align: right;
+    }
+}
+  
+  

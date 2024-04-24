@@ -1,0 +1,37 @@
+// app colors
+$primary:#3B1437;
+$primary-light:rgba($primary, 0.5); 
+$primary-hover:#3B1437;
+$brown : #686252 ; 
+$brown-light : #686252 ; 
+$green : #2FB350 ; 
+$red : #BF2C24; 
+$gray : #e7e7e7;
+
+
+
+$background-gray : #FCFCFC;
+$shadow: rgba($primary, 0.05); 
+$border: #E4E4E4;
+$raduis-md : 0.5rem;
+$raduis-lg : 1rem;
+$raduis-input : 1.5rem;
+$height-input : 50px ; 
+$error-color : rgb(255, 104, 104) ; 
+$border-gray: #CED1DC;
+$lighter-gray: #ECEDED;
+$light-gray: #ECEDED;
+
+
+$--colors: (
+  'primary': (
+    'base': $primary-hover,
+  ),
+);
+
+@forward 'element-plus/theme-chalk/src/common/var.scss' with (
+  $colors: $--colors,
+
+);
+
+@use 'element-plus/theme-chalk/src/index.scss' as *;

@@ -1,0 +1,12 @@
+welcome: "مرحبا"
+home: "الرئيسية"
+form: "استمارة"
+table: "جدول"
+tools: "أدوات"
+name: "الإسم"
+address: "العنوان"
+city: "المدينة"
+phone: "رقم الهاتف"
+# pages
+forms: "استمارات"
+tables: "جداول"

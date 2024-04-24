@@ -1,0 +1,11 @@
+welcome: "Welcome"
+home: "Home"
+form: "form"
+tools: "Tools"
+name: "Name"
+address: "Address"
+city: "City"
+phone: "Mobile Number"
+# pages
+forms: "Forms"
+tables: "Tables"

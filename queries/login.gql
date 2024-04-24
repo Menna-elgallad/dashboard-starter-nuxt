@@ -1,0 +1,42 @@
+mutation loginBoard($input: LoginBoardInput!) {
+  emailAndPasswordLoginBoard(input: $input) {
+    data {
+      token
+      securityGroup {
+        id
+        groupName
+        permissions
+      }
+    }
+    success
+    code
+    message
+  }
+}
+query GetMe {
+  me {
+    data {
+      id
+      arLastName
+      enLastName
+      securityGroup {
+        id
+        groupName
+        permissions
+      }
+    }
+    code
+    message
+    success
+  }
+}
+mutation changeAdminPassword($input: ChangeAdminPasswordInput!) {
+  changeAdminPassword(input: $input) {
+    success
+    message
+    code
+    data {
+      token
+    }
+  }
+}
