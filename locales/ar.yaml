@@ -3,10 +3,16 @@ home: "الرئيسية"
 form: "استمارة"
 table: "جدول"
 tools: "أدوات"
+search: "بحث"
+# form
 name: "الإسم"
 address: "العنوان"
 city: "المدينة"
 phone: "رقم الهاتف"
+email: "البريد الإلكتروني"
+status: "الحالة"
+price: "السعر"
 # pages
 forms: "استمارات"
 tables: "جداول"
+#tables

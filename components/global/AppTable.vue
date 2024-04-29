@@ -5,11 +5,10 @@
         .input(class=" xl:w-1/4 lg:w-1/2 w-full min-w-[350px]")
             el-input(size="large" 
                 v-model="search"
-                placeholder="Search Clients. . ."
+                :placeholder="$t('search')"
                 :prefix-icon="Search"
                 @keyup="searchTimeOut"
             )
-    
     .containerr.mt-4      
         el-table(:data='data' style='width:100%'  @current-change="handleCurrentChange"   @sort-change="triggerSort"   :row-class-name="tableRowClassName" )
             el-table-column( v-for="column in columns"  :prop="column.prop"  :key="column.prop"   min-width="250"  )
@@ -57,13 +56,15 @@
         //-                                 el-dropdown-item.cursor-pointer(@click="openBan(scope.row)") {{ !scope.row.isBlocked? 'Ban' : 'Unban'}} Client
 
      
-        //- .pagination.flex.items-center.flex-wrap.gap-2(class="sm:justify-between justify-center")
-        //-     .paginat-data 
-        //-         span.text-xs.text-main-gray.font-medium  {{`Showing ${currentPage===1 ? currentPage : ((currentPage-1)*limit)+1   }- ${currentPage*limit <= pageInfo?.totalCount ? currentPage*limit : pageInfo?.totalCount   } from  ${pageInfo?.totalCount ? pageInfo?.totalCount : 0 }`  }}
-        //-     el-pagination( :pager-count="4"  :page-count="pageInfo?.totalPages" v-model:current-page='currentPage' :page-size='limit'  layout=' prev, pager, next' :total='pageInfo?.totalCount' )
+        .pagination.flex.items-center.flex-wrap.gap-2(class="sm:justify-between justify-center")
+            
+            span.text-xs.text-main-gray.font-medium  {{`${t("showing")} ${currentPage===1 ? currentPage : ((currentPage-1)*limit)+1   }- ${currentPage*limit <= pageInfo?.totalCount ? currentPage*limit : pageInfo?.totalCount   } from  ${pageInfo?.totalCount ? pageInfo?.totalCount : 0 }`  }}
+            el-pagination( style="direction : ltr"  :pager-count="4"  :page-count="pageInfo?.totalPages" v-model:current-page='currentPage' :page-size='limit'  layout=' prev, pager, next' :total='pageInfo?.totalCount' @current-change="handleCurrentChange" )
+
 </template>
 
 <script setup lang="ts">
+import { Calendar, Search } from "@element-plus/icons-vue";
 const props = defineProps({
   columns: {
     type: Array,
@@ -73,10 +74,19 @@ const props = defineProps({
     type: Array,
     required: true,
   },
+  pageInfo: {
+    type: Object,
+    required: false,
+    default: { totalCount: 20, totalPages: 2 },
+  },
 });
-const emit = defineEmits(["sort"]);
 
-const sortHandler = reactive({});
+const currentPage = ref(1);
+const limit = 10;
+
+const emit = defineEmits(["sort", "search"]);
+// sort
+const sortHandler = reactive<any>({});
 function sortData(prop: string, order: string) {
   const sortBy = {
     prop: prop,
@@ -87,7 +97,16 @@ function sortData(prop: string, order: string) {
   } else {
     sortHandler[prop] = order;
   }
-  emit("sort", sortBy);
+  emit("sort", sortHandler);
+}
+// search
+const search = ref();
+let timer: any;
+function searchTimeOut() {
+  clearTimeout(timer);
+  timer = setTimeout(async () => {
+    emit("search", search.value);
+  }, 500);
 }
 </script>
 

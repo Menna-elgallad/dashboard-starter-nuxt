@@ -1,40 +1,41 @@
 <template lang="pug">
-AppTable(:columns="table.columns" :data="table.data"   @sort="sort")
+AppTable(:columns="table.columns" :data="table.data"   @sort="sort" @search="search")
 </template>
 
 <script setup lang="ts">
+const { t, tm, rt, locale } = useI18n();
 const table = reactive({
   columns: [
     {
       prop: "identity",
-      label: "Name",
+      label: t("name"),
       component: "AvatarText",
       sortable: true,
     },
     {
       prop: "email",
-      label: "Email",
+      label: t("email"),
       component: "Text",
       sortable: false,
       type: "font-bold",
     },
     {
       prop: "phone",
-      label: "Phone",
+      label: t("phone"),
       component: "Text",
       sortable: false,
       type: "font-default",
     },
     {
       prop: "status",
-      label: "Status",
+      label: t("status"),
       component: "Label",
       sortable: false,
       type: "outline",
     },
     {
       prop: "price",
-      label: "Price",
+      label: t("price"),
       component: "Text",
       sortable: true,
       type: "font-default",
@@ -76,14 +77,80 @@ const table = reactive({
       },
       email: "alice@example.com",
       phone: "01234567890",
-      status: "ACTIVE",
+      status: "OPEN",
       price: 150,
+    },
+    {
+      identity: {
+        image: "https://randomuser.me/api/portraits/men/1.jpg",
+        title: "Michael Smith",
+        text: "Accountant",
+      },
+      email: "michael@example.com",
+      phone: "01098765432",
+      status: "ACTIVE",
+      price: 180,
+    },
+    {
+      identity: {
+        image: "https://randomuser.me/api/portraits/women/2.jpg",
+        title: "Emily Johnson",
+        text: "Marketing Manager",
+      },
+      email: "emily@example.com",
+      phone: "01928374650",
+      status: "BLOCKED",
+      price: 220,
+    },
+    {
+      identity: {
+        image: "https://randomuser.me/api/portraits/men/3.jpg",
+        title: "David Lee",
+        text: "Software Engineer",
+      },
+      email: "david@example.com",
+      phone: "01729485736",
+      status: "OPEN",
+      price: 190,
+    },
+    {
+      identity: {
+        image: "https://randomuser.me/api/portraits/women/4.jpg",
+        title: "Sophia Rodriguez",
+        text: "Event Planner",
+      },
+      email: "sophia@example.com",
+      phone: "01638472950",
+      status: "ACTIVE",
+      price: 170,
+    },
+    {
+      identity: {
+        image: "https://randomuser.me/api/portraits/men/5.jpg",
+        title: "Daniel Martinez",
+        text: "Architect",
+      },
+      email: "daniel@example.com",
+      phone: "01547382916",
+      status: "BLOCKED",
+      price: 210,
+    },
+    {
+      identity: {
+        image: "https://randomuser.me/api/portraits/women/6.jpg",
+        title: "Olivia Brown",
+        text: "HR Manager",
+      },
+      email: "olivia@example.com",
+      phone: "01456273849",
+      status: "DELETED",
+      price: 200,
     },
   ],
 });
 
 table.data = table.data.map((e: any) => ({ ...e, price: e.price + " SAR" }));
-const sortedData = reactive({});
+const sortedData = reactive<any>({});
 table.columns.forEach((item: any) => {
   if (item.sortable) {
     sortedData[item.prop] = { prop: item.prop, order: "" };
@@ -91,8 +158,14 @@ table.columns.forEach((item: any) => {
 });
 
 function sort(value: any) {
-  const { prop, order } = value;
-  sortedData[prop].order = order;
+  Object.keys(value).forEach((e) => {
+    sortedData[e].prop = e;
+    sortedData[e].order = value[e];
+  });
+  console.log(sortedData);
+}
+function search(value: any) {
+  console.log(value);
 }
 </script>
 

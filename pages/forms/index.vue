@@ -9,9 +9,13 @@ el-form(    @submit.prevent='onSubmit'   ref="myForm" label-position="top"  :val
 </template>
 
 <script lang="ts" setup>
+import { ar } from "yup-locales";
 import { useForm } from "vee-validate";
 import * as yup from "yup";
-// const name = ref("");
+const { locale } = useI18n();
+if (locale.value == "ar") {
+  yup.setLocale(ar);
+}
 const myForm = ref();
 
 const validPhone = ref(true);
