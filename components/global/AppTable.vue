@@ -2,7 +2,7 @@
 .blogs.content  
     
     .topBar.flex.items-center.flex-wrap.gap-2(class="sm:justify-between justify-center")
-        .input(class=" xl:w-1/4 lg:w-1/2 w-full")
+        .input(class=" xl:w-1/4 lg:w-1/2 w-full min-w-[350px]")
             el-input(size="large" 
                 v-model="search"
                 placeholder="Search Clients. . ."
@@ -11,19 +11,23 @@
             )
     
     .containerr.mt-4      
-        el-table(:data='data' style='width:100%'  @current-change="handleCurrentChange"      :row-class-name="tableRowClassName" )
-            el-table-column( v-for="column in columns" :key="column.prop" :label="column.label"  min-width="250"  )
+        el-table(:data='data' style='width:100%'  @current-change="handleCurrentChange"   @sort-change="triggerSort"   :row-class-name="tableRowClassName" )
+            el-table-column( v-for="column in columns"  :prop="column.prop"  :key="column.prop"   min-width="250"  )
+                template(#header)
+                    div.flex.items-center
+                        span.ml-2.mr-2 {{ column.label }}
+                        .sort.cursor-pointer
+                            Icon(name="solar:arrow-up-outline" class="  text-main-gray text-sm rtl:mr-[-5px] ml-[-5px] " :class="{'text-primary' : sortHandler[column.prop]==='ASC' }"    v-if="column.sortable"  @click="sortData(column.prop , 'ASC')" )
+                            Icon(name="solar:arrow-down-outline" class="text-main-gray text-sm" :class="{'text-primary' : sortHandler[column.prop]==='DESC' }" v-if="column.sortable"  @click="sortData(column.prop , 'DESC')"   )
+                        
                 template(#default="scope")
                     .flex.gap-2.items-center 
-                        div(v-if="column.component==='AvatarText'" )
-                            TableAvatarText(:image="scope.row[column.prop].image" :title="scope.row[column.prop].title" :text="scope.row[column.prop].text" )
-                        div( v-else-if="column.component==='Text'" )
-                            TableText(:value="scope.row[column.prop]" :type="column.type" )
-                        div( v-else-if="column.component==='Label'" )
-                            TableLabel(:value="scope.row[column.prop]" :type="column.type"  )
-
-
-
+                        div(v-if="column?.component==='AvatarText'" )
+                            TableAvatarText(:image="scope.row[column?.prop]?.image" :title="scope.row[column?.prop]?.title" :text="scope.row[column?.prop]?.text" )
+                        div( v-else-if="column?.component==='Text'" )
+                             TableText(:value="scope.row[column?.prop]" :type="column?.type" )
+                        div( v-else-if="column?.component==='Label'" )
+                             TableLabel(:value="scope.row[column?.prop]" :type="column?.type"  )
 
                         // p {{ scope.row[column.prop] }}
                         // p {{ column.component }}
@@ -58,6 +62,7 @@
         //-         span.text-xs.text-main-gray.font-medium  {{`Showing ${currentPage===1 ? currentPage : ((currentPage-1)*limit)+1   }- ${currentPage*limit <= pageInfo?.totalCount ? currentPage*limit : pageInfo?.totalCount   } from  ${pageInfo?.totalCount ? pageInfo?.totalCount : 0 }`  }}
         //-     el-pagination( :pager-count="4"  :page-count="pageInfo?.totalPages" v-model:current-page='currentPage' :page-size='limit'  layout=' prev, pager, next' :total='pageInfo?.totalCount' )
 </template>
+
 <script setup lang="ts">
 const props = defineProps({
   columns: {
@@ -69,148 +74,21 @@ const props = defineProps({
     required: true,
   },
 });
+const emit = defineEmits(["sort"]);
 
-// import { Calendar, Search } from "@element-plus/icons-vue";
-// import useQuery from "~/composables/queryParams";
-// import { storeToRefs } from "pinia";
-// import { useMain } from "~/stores/common";
-// const mainData = useMain();
-// import { useUsers } from "~/stores/users";
-// const usersStore = useUsers();
-// const deleteUserPopUp = ref(false);
-// const deleteText = ref();
-// const banDialog = ref(false);
-// const blockStatus = ref();
-// const { loadingusers, loadinguser } = storeToRefs(usersStore);
-// const runtimeConfig = useRuntimeConfig();
-// const router = useRouter();
-// const id = ref();
-// const showfilters = ref(false);
-// const route = useRoute();
-// const sortOptions = ref(["DATE_JOINED", "MOST_SESSIONS", "LEAST_SESSIONS"]);
-// const users = ref();
-// const currentPage = ref(1);
-// const sort = ref("DATE_JOINED");
-// const search = ref();
-// const pageInfo = ref();
-
-// const filterData = ref({
-//   gender: "",
-//   isBlocked: "Active",
-//   userType: "",
-// });
-// const limit = ref(10);
-// useQuery(currentPage, sort, filterData, search);
-// useHead({
-//   title: "Admin | Users",
-// });
-// const fileShow = ref(false);
-// const returnedfile = ref("");
-// function showfile(file) {
-//   fileShow.value = true;
-//   returnedfile.value = file;
-// }
-// onMounted(async () => {
-//   await getData();
-// });
-
-// const tableRowClassName = ({
-//   row,
-//   rowIndex,
-// }: {
-//   row: User;
-//   rowIndex: number;
-// }) => {
-//   if (row.isBlocked) {
-//     return "blocked-row";
-//   } else if (row.isDeleted) {
-//     return "deleted-row";
-//   } else {
-//     return "";
-//   }
-// };
-
-// const getFilterData = async (data: object) => {
-//   filterData.value = { ...data };
-//   await getData();
-// };
-// // function toggleDropdown(val: boolean) {
-// //   val ? showfilters.value.handleOpen() : showfilters.value.handleClose();
-// // }
-// const openDelete = (userID: string, code: string, name: string) => {
-//   id.value = userID;
-//   deleteText.value = `Are you sure you want to delete user ${
-//     name ? name : ""
-//   } ${"#" + code + "? "}`;
-//   deleteUserPopUp.value = true;
-// };
-
-// const openBan = (user) => {
-//   id.value = user.id;
-//   blockStatus.value = user.isBlocked;
-//   banDialog.value = true;
-// };
-
-// watch(currentPage, async () => {
-//   await getData();
-// });
-
-// let timer: any;
-// function searchTimeOut() {
-//   clearTimeout(timer);
-//   timer = setTimeout(async () => {
-//     await getData();
-//   }, 500);
-// }
-
-// async function getData() {
-//   const data = await usersStore.getUsers(
-//     filterData.value,
-//     search.value,
-//     sort.value,
-//     currentPage.value,
-//     limit.value
-//   );
-//   //   toggleDropdown(false);
-//   users.value = data.users;
-//   pageInfo.value = data.pageInfo;
-// }
-
-// async function sortData(option) {
-//   sort.value = option;
-//   await getData();
-// }
-// async function banUser() {
-//   // const { success, message } = await usersStore.BanUser(
-//   // id.value,
-//   // blockStatus.value
-//   // );
-//   // if (success) {
-//   // banDialog.value = false;
-//   // await getData();
-//   // }
-// }
-// async function deleteUser() {
-//   // const { success, message } = await usersStore.deleteUser(id.value);
-//   // if (success) {
-//   // deleteUserPopUp.value = false;
-//   // await getData();
-//   // }
-// }
-
-// const currentRow = ref();
-
-// // const handleCurrentChange = (val: any | undefined) => {
-// //     currentRow.value = val;
-// //     router.push(`/clients/all-clients/clientProfile_${currentRow.value.id}`);
-// // };
-
-// const loadingExport = ref(false);
-// async function exportCsv() {
-//   loadingExport.value = true;
-//   await downloadFile("csv/clients");
-//   loadingExport.value = false;
-// }
+const sortHandler = reactive({});
+function sortData(prop: string, order: string) {
+  const sortBy = {
+    prop: prop,
+    order: order,
+  };
+  if (sortHandler[prop] === order) {
+    sortHandler[prop] = "";
+  } else {
+    sortHandler[prop] = order;
+  }
+  emit("sort", sortBy);
+}
 </script>
 
 <style lang="scss">

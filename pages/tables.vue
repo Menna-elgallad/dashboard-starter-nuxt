@@ -1,36 +1,43 @@
 <template lang="pug">
-AppTable(:columns="table.columns" :data="table.data")
+AppTable(:columns="table.columns" :data="table.data"   @sort="sort")
 </template>
 
-<script setup>
+<script setup lang="ts">
 const table = reactive({
   columns: [
     {
       prop: "identity",
       label: "Name",
       component: "AvatarText",
-      sortable: false,
+      sortable: true,
     },
     {
       prop: "email",
       label: "Email",
       component: "Text",
-      sortable: true,
+      sortable: false,
       type: "font-bold",
     },
     {
       prop: "phone",
       label: "Phone",
       component: "Text",
-      sortable: true,
+      sortable: false,
       type: "font-default",
     },
     {
       prop: "status",
       label: "Status",
       component: "Label",
-      sortable: true,
+      sortable: false,
       type: "outline",
+    },
+    {
+      prop: "price",
+      label: "Price",
+      component: "Text",
+      sortable: true,
+      type: "font-default",
     },
     // { prop: "actions", label: "Actions", sortable: false },
   ],
@@ -46,6 +53,7 @@ const table = reactive({
       email: "john@example.com",
       phone: "01065952262",
       status: "DELETED",
+      price: 100,
     },
     {
       identity: {
@@ -57,6 +65,7 @@ const table = reactive({
       email: "mark@example.com",
       phone: "01012345678",
       status: "ACTIVE",
+      price: 200,
     },
     {
       identity: {
@@ -68,9 +77,23 @@ const table = reactive({
       email: "alice@example.com",
       phone: "01234567890",
       status: "ACTIVE",
+      price: 150,
     },
   ],
 });
+
+table.data = table.data.map((e: any) => ({ ...e, price: e.price + " SAR" }));
+const sortedData = reactive({});
+table.columns.forEach((item: any) => {
+  if (item.sortable) {
+    sortedData[item.prop] = { prop: item.prop, order: "" };
+  }
+});
+
+function sort(value: any) {
+  const { prop, order } = value;
+  sortedData[prop].order = order;
+}
 </script>
 
 <style></style>

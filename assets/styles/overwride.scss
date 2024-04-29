@@ -7,6 +7,7 @@
 --el-color-primary-light-9:#3b143720  !important;
 --el-menu-base-level-padding : 30px !important;
 --el-menu-hover-bg-color : #{$shadow} !important ; 
+--el-input-border-radius: #{$raduis-input} !important;
 }
 
 
@@ -114,9 +115,7 @@ color: var(--el-table-text-color);
 --el-input-height: #{$height-input} !important;
 
 }
-.el-input {
-    --el-input-border-radius: #{$raduis-input} !important;
-}
+
 .el-input__prefix{
     .el-icon {
         font-size: 20px;
@@ -126,6 +125,7 @@ color: var(--el-table-text-color);
     transition: all 0.4s ease !important;
     padding: 1px 24px !important;
     text-align: unset !important;
+    border-radius: $raduis-input !important;
     
 }
 .el-select-dropdown__list{
@@ -148,16 +148,16 @@ color: var(--el-table-text-color);
 }
 .el-form-item.is-error  {
     .file-upload{
-        border: 1px dashed $error-color !important;
+        border: 1px dashed $error !important;
     }
     .el-input__wrapper,.el-textarea__inner , .el-select__wrapper{
-        box-shadow: 0 0 0 1px $error-color inset !important;
+        box-shadow: 0 0 0 1px $error inset !important;
     }
     .ql-toolbar{
-        border-color: $error-color !important;
+        border-color: $error !important;
     } 
     .ql-container{
-        border-color: $error-color !important;
+        border-color: $error !important;
         border-top-color: transparent !important;
     }
 }
@@ -177,7 +177,7 @@ color: var(--el-table-text-color);
     }
 }
 .input-error {
-    box-shadow: 0 0 0 1px $error-color inset !important;
+    box-shadow: 0 0 0 1px $error inset !important;
 }
 .el-form-item__error {
     line-height: 1;
@@ -197,7 +197,7 @@ color: var(--el-table-text-color);
     box-shadow: none !important;
 }
 .vue-tel-input.p-invali-input:focus-within{
-    border-color: $error-color  !important;
+    border-color: $error  !important;
 }
 
 .vti__dropdown-item {
@@ -338,33 +338,7 @@ input.vti__input {
     padding-bottom: 1rem;
 }
 
-.el-table {
-    td, th {
-        white-space: nowrap !important;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    
-        &.th {
-        padding: 1rem !important;
-        font-weight: 500 !important;
-        }
-    
-        &.td {
-        padding: 0.3rem 1rem !important;
-    
-        .cell {
-            padding: 0.7rem !important;
-        }
-        }
-    }
 
-    .cell, div, span, p {
-        white-space: nowrap !important;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-    line-height: 23px;
-}
     
 .el-tabs {
     --el-tabs-header-height: 28px !important;

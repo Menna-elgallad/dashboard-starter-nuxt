@@ -189,7 +189,7 @@ pointer-events: none
   
 
 .p-invali-input{
-    border-color:  $error-color !important;
+    border-color:  $error !important;
 }
 
 
@@ -247,7 +247,7 @@ pointer-events: none
  }
 
 .error-msg {
-  color: $error-color !important;
+  color: $error !important;
   transition: opacity 0.5s ;
   opacity: 1 !important;
 
