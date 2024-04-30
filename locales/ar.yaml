@@ -16,3 +16,6 @@ price: "السعر"
 forms: "استمارات"
 tables: "جداول"
 #tables
+showing: "عرض"
+from: "من"
+actions: "الاجراءات"

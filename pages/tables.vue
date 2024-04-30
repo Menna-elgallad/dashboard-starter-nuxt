@@ -1,5 +1,9 @@
 <template lang="pug">
-AppTable(:columns="table.columns" :data="table.data"   @sort="sort" @search="search")
+AppTable(v-slot="{data}" :columns="table.columns" :data="table.data" :sortOptions="table.sort"  )
+    tmeplate(#default)
+      .flex.items-center.py-2
+        .toggle-icon 
+          Icon.text-md(name="IconEye" )
 </template>
 
 <script setup lang="ts">
@@ -32,6 +36,12 @@ const table = reactive({
       component: "Label",
       sortable: false,
       type: "outline",
+      filters: [
+        { text: "Deleted", value: "DELETED" },
+        { text: "Active", value: "ACTIVE" },
+        { text: "Blocked", value: "BLOCKED" },
+        { text: "Open", value: "OPEN" },
+      ],
     },
     {
       prop: "price",
@@ -147,26 +157,15 @@ const table = reactive({
       price: 200,
     },
   ],
+  sort: [
+    { prop: "price", order: "ascending", value: "PRICE_ASC" },
+    { prop: "price", order: "descending", value: "PRICE_DESC" },
+    { prop: "identity", order: "ascending", value: "IDENTITY_ASC" },
+    { prop: "identity", order: "descending", value: "IDENTITY_DESC" },
+  ],
 });
 
 table.data = table.data.map((e: any) => ({ ...e, price: e.price + " SAR" }));
-const sortedData = reactive<any>({});
-table.columns.forEach((item: any) => {
-  if (item.sortable) {
-    sortedData[item.prop] = { prop: item.prop, order: "" };
-  }
-});
-
-function sort(value: any) {
-  Object.keys(value).forEach((e) => {
-    sortedData[e].prop = e;
-    sortedData[e].order = value[e];
-  });
-  console.log(sortedData);
-}
-function search(value: any) {
-  console.log(value);
-}
 </script>
 
 <style></style>

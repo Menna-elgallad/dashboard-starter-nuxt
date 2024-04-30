@@ -1,6 +1,7 @@
 welcome: "Welcome"
 home: "Home"
-form: "form"
+form: "Form"
+table: "Table"
 tools: "Tools"
 search: "Search"
 #form
@@ -15,3 +16,7 @@ identity: "Identity"
 # pages
 forms: "Forms"
 tables: "Tables"
+# table
+showing: "Showing"
+from: "From"
+actions: "Actions"

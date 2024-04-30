@@ -1,6 +1,6 @@
 <template lang="pug">
 div.flex.items-center.gap-3
-        Avatar(:src="image" )
+        Avatar(:src="image"  :table="true" @click="$emit('showFile' , image )")
         div
             h3.text-sm.font-medium.text-black {{ title }}
             p.text-xs {{ text }}  

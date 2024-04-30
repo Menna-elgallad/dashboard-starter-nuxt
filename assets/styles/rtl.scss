@@ -13,6 +13,14 @@
         margin-left: unset !important ;
         margin-right: 80px !important;
     }
+    .vue-tel-input{
+        direction: ltr !important;
+        .vti__input {
+            
+            padding-right: 24px;
+            direction: rtl;
+        }
+    }
     // elment-plus
     .el-menu.el-menu-vertical-demo{
         border-left: solid 1px var(--el-menu-border-color);
@@ -32,13 +40,9 @@
             padding-right: calc(var(--el-menu-base-level-padding) + var(--el-menu-level)* var(--el-menu-level-padding)) !important;
         }
     }
-    .vue-tel-input{
-        direction: ltr !important;
-        .vti__input {
-            
-            padding-right: 24px;
-            direction: rtl;
-        }
+    .el-checkbox__label{
+        padding-right: 8px !important;
+        padding-left: unset !important;
     }
     .el-input__prefix-inner > :last-child {
         margin-left: 8px !important;
@@ -47,6 +51,23 @@
     .el-table .cell{
         text-align: right;
     }
+    .el-upload-list--picture-card .el-upload-list__item{
+        margin-left: 8px !important;
+        margin-right: unset !important;
+    }
+    .el-upload-list--picture-card .el-upload-list__item-actions span + span {
+        margin-left: unset !important;
+        margin-right: 1rem !important;
+        .el-icon{
+            svg{
+                path{
+            fill:  white;
+
+                }
+
+            }
+        }
+    }
+      
 }
-  
   

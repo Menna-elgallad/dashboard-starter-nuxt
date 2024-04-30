@@ -12,7 +12,6 @@ const emit = defineEmits(["file"]);
 const file = ref();
 const addfile = (event) => {
   file.value = event.target.files[0];
-
   emit("file", file.value);
 };
 </script>

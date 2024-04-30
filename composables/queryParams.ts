@@ -1,62 +1,78 @@
-export default function useQuery(
-  initialpage: Number,
-  sort: string = "",
-  filterData: any = {},
-  search: string = ""
-) {
-  const router = useRouter();
-  const route = useRoute();
-  onMounted(async () => {
-    initialpage.value = route.query?.pageNumber
-      ? Number(route.query?.pageNumber)
-      : initialpage.value;
-    sort.value = route.query?.sortOption ? route.query?.sortOption : sort.value;
-    search.value = route.query?.find ? route.query?.find : search.value;
 
-    const { sortOption, pageNumber, find, ...filters } = route.query;
-    if (Object.keys(filters).length) {
-      filterData.value = filters;
-    }
+export default function useQuery(
+  currentPage: Ref<number>,
+  sort: Ref<string>,
+  filters: Ref<any>,
+  search: Ref<string>
+) {
+  const { currentPage: currentPageRef, sort: sortRef, filters: filtersRef, search: searchRef } = toRefs({
+    currentPage,
+    sort,
+    filters,
+    search
   });
 
-  watch(initialpage, (curr) => {
+  const router = useRouter();
+  const route = useRoute();
+
+  onMounted(async () => {
+    currentPageRef.value = route.query?.pageNumber
+      ? Number(route.query?.pageNumber)
+      : currentPageRef.value;
+    searchRef.value = route.query?.find ? route.query?.find : searchRef.value;
+    sortRef.value = route.query?.sortOption ? decode(route.query?.sortOption || {}) : sortRef.value;
+    filtersRef.value = route.query?.filterOptions ? decode(route.query?.filterOptions || {}) : filtersRef.value;
+    
+  });
+
+  function decode(value: Object) {
+    try{
+      const data = JSON.parse(decodeURIComponent(value));
+      return data
+    }
+    catch(e){
+      return "";
+    }
+  }
+
+  watch(currentPageRef, (curr) => {
     router.push({
       path: route.fullPath,
       query: { ...route.query, pageNumber: curr },
     });
   });
-  watch(search, (curr) => {
+
+  let timer: any;
+  watch(searchRef, (curr) => {
+    clearTimeout(timer);
+    timer = setTimeout(async () => {
+      router.push({
+        path: route.fullPath,
+        query: { ...route.query, find: curr },
+      });
+  
+    }, 500);
+  });
+  watch(sortRef, (curr) => {
     router.push({
       path: route.fullPath,
-      query: { ...route.query, find: curr },
+      query: { ...route.query, sortOption: encodeURIComponent(JSON.stringify(curr || "")) },
     });
   });
-  watch(sort, (curr) => {
+
+
+  watch(filtersRef, (curr) => {
+    console.log(curr , "filtersRef")
     router.push({
       path: route.fullPath,
-      query: { ...route.query, ...(sort.value && { sortOption: sort.value }) },
+      query: { ...route.query, filterOptions: encodeURIComponent(JSON.stringify(curr || "")) },
     });
   });
-  watch(filterData, (curr) => {
-    router.push({
-      path: route.fullPath,
-      query: { ...route.query, ...filterData.value },
-    });
-  });
-  watch(
-    () => route.query,
-    () => {
-      initialpage.value = route.query?.pageNumber
-        ? Number(route.query?.pageNumber)
-        : initialpage.value;
-      sort.value = route.query?.sortOption
-        ? route.query?.sortOption
-        : sort.value;
-      search.value = route.query?.find ? route.query?.find : search.value;
-      const { sortOption, pageNumber, find, ...filters } = route.query;
-      if (Object.keys(filters).length) {
-        filterData.value = filters;
-      }
-    }
-  );
+
+  return {
+    currentPage: currentPageRef,
+    sort: sortRef,
+    filters: filtersRef,
+    search: searchRef
+  };
 }

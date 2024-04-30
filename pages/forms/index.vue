@@ -1,6 +1,7 @@
 <template lang="pug">
 el-form(    @submit.prevent='onSubmit'   ref="myForm" label-position="top"  :validationSchema="formSchema" )
         .formItems(class="grid grid-cols-1  xl:grid-cols-2 gap-3")
+                UploadList
                 InputText(:label="$t('name')" placeholder="Name" name="name" class="xl:col-span-2 col-span-1" value="Amer")
                 InputText(:label="$t('address')" placeholder="Address" name="address" value="cairo")
                 InputSelect(:label="$t('phone')" placeholder="City" name="city")

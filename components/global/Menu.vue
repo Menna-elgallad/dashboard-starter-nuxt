@@ -10,7 +10,6 @@ div.relative
       //- img.py-5( class="cursor-pointer !h-[80px] !w-[71px] !max-w-[71px]" src="/images/Logo-small.svg" v-else @click="router.push('/')" )
       
       template(v-for="(navLink , index) in menu ")
-
           el-sub-menu(:index='`${index+1}`' v-if="navLink.submenu"  )
               template(#title='')
                 i.el-icon(:class="navLink.icon")
@@ -33,15 +32,15 @@ div.relative
 <script lang="ts" setup>
 import { storeToRefs } from "pinia";
 import { useMain } from "~/stores/common";
-const {t} = useI18n()
-const localePath = useLocalePath()
+const { t } = useI18n();
+const localePath = useLocalePath();
 
 import {
   Document,
   Menu as IconMenu,
   Location,
   Setting,
-} from '@element-plus/icons-vue'
+} from "@element-plus/icons-vue";
 const mainStore = useMain();
 const { fullNav, mobile, hideNav } = storeToRefs(mainStore);
 const { permissions } = storeToRefs(mainStore);
@@ -61,10 +60,6 @@ function getDisabled(role) {
     return false;
   }
 }
-
-watch(fullNav , (curr)=>{
-  console.log(curr)
-})
 
 const menu = [
   {
@@ -90,7 +85,6 @@ const menu = [
     name: t("tools"),
     icon: "myicon setting-icon",
   },
- 
 ];
 </script>
 
@@ -98,6 +92,4 @@ const menu = [
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 260px;
 }
-
-
 </style>
