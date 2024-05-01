@@ -47,41 +47,53 @@ export async function downloadFile(file: string ) {
     });
 }
 
-export function getCombinationDoc(role, spc) {
-  const type = role === "DOCTOR" ? "Doctor " : "Therapist ";
-  switch (spc) {
-    case "Doctor PSYCHOLOGICAL":
-      return {
-        label: "Psychiatrist",
-        role: type,
-        class: "text-teal-400 bg-teal-50 ",
-      };
-    case "Doctor FAMILY":
-      return {
-        label: "Family Medicine Physician",
-        role: type,
-        class: "text-teal-400 bg-teal-50 ",
-      };
-    case "Therapist PSYCHOLOGICAL":
-      return {
-        label: "Psychologist",
-        role: type,
-        class: "text-orange-400  bg-orange-50 ",
-      };
-    case "Therapist FAMILY":
-      return {
-        label: "Family Specialist",
-        role: type,
-        class: "text-orange-400  bg-orange-50 ",
-      };
-    case "Therapist SOCIAL":
-      return {
-        label: "Sociology Specialist",
-        role: type,
-        class: "text-orange-400  bg-orange-50 ",
-      };
-  }
+export function uploadFile(params: any) {
+return new Promise((resolve, reject) => {
+  
+    const file = params.file as File;
+    const extension = file.name.slice(file.name.lastIndexOf("."));
+    let fileName = `File-${new Date().getTime()}${extension}`;
+    const myRenamedFile = new File([file], fileName, { type: file.type });
+
+    useAsyncGql("generateUploadLink", {
+      model: "BLOG_COVER",
+      fileName: fileName,
+      contentType: file.type,
+      sizeInBytes: file.size,
+    })
+      .then(async ({ data }) => {
+        const link = data.value?.generateUploadLink.data;
+        try {
+          const response = await $fetch(link, {
+            method: "PUT",
+            body: myRenamedFile,
+          });
+          const filereturned = link
+            ?.split("?")[0]
+            .split(runtimeConfig.public.BUCKET_URL)[1];
+          console.log(
+            filereturned,
+            runtimeConfig.public.BUCKET_URL,
+            "file returned"
+          );
+          resolve(filereturned);
+        } catch (error) {
+          reject(error);
+        }
+        
+      })
+      .catch((error) => {
+        ElNotification({
+          title: "Error",
+          type: "error",
+          message: error,
+        });
+        
+        reject(error);
+      });
+  });
 }
+
 export function getStatusColor(status: string) {
   switch (status) {
    

@@ -1,11 +1,12 @@
 <template lang="pug">
 el-form(    @submit.prevent='onSubmit'   ref="myForm" label-position="top"  :validationSchema="formSchema" )
         .formItems(class="grid grid-cols-1  xl:grid-cols-2 gap-3")
-                UploadList
+                InputUploadImageList(label="List Images"  name="listImages")
                 InputText(:label="$t('name')" placeholder="Name" name="name" class="xl:col-span-2 col-span-1" value="Amer")
                 InputText(:label="$t('address')" placeholder="Address" name="address" value="cairo")
                 InputSelect(:label="$t('phone')" placeholder="City" name="city")
                 InputPhone(:padding="0.313" @validphone="validatecode" :label="$t('phone')" placeholder="enter Your Phone Number" name="phone" mode="international")
+                InputUploadImage(label="avatar"  name="avatar") 
         AppButton(title="Create" type="submit") 
 </template>
 
@@ -27,7 +28,9 @@ function validatecode(val: any) {
 const formSchema = yup.object({
   name: yup.string().required(),
   address: yup.string().required(),
+  avatar: yup.string().required().label("Avatar"),
   city: yup.string().required(),
+  listImages: yup.array().min(1).required(),
   phone: yup
     .number()
     .transform((value: any) => (Number.isNaN(value) ? null : value))

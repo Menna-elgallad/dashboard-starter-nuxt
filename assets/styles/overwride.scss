@@ -8,6 +8,7 @@
 --el-menu-base-level-padding : 30px !important;
 --el-menu-hover-bg-color : #{$shadow} !important ; 
 --el-input-border-radius: #{$raduis-input} !important;
+--el-upload-size : 160px !important
 }
 
 
@@ -62,7 +63,9 @@ font-weight:500;
 color: var(--el-text-color-regular);
 color: var(--el-table-text-color);
 }
-
+.is-error{
+    --el-border-color : #{$error} !important;
+}
 
 .el-menu.el-menu-vertical-demo {
     padding-left: 5px ;
@@ -121,7 +124,8 @@ color: var(--el-table-text-color);
         font-size: 20px;
     }
 }
-.el-upload--picture-card , .el-upload-list--picture-card .el-upload-list__item  {
+.el-upload--picture-card , .el-upload-list--picture-card .el-upload-list__item ,
+.el-upload-dragger {
     border-radius: $raduis-input !important;
 }
 .el-input__wrapper , .el-textarea__inner  , .el-select__wrapper{
@@ -547,4 +551,15 @@ color: var(--el-text-color-regular);
             }
         }
     }
+}
+.el-upload--picture-card  , .el-upload {
+    width: var(--el-upload-size)  !important;
+    height: var(--el-upload-size)  !important;
+}
+.el-upload-list--picture-card{
+    --el-upload-list-picture-card-size : var(--el-upload-size)  !important;
+
+}
+.el-form-item__error {
+    padding: 0.5rem !important;
 }

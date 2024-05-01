@@ -137,16 +137,34 @@ query packages {
   }
 }
 
-query specialtiesBySpecialization($id :ID!) {
-  specialtiesBySpecialization(
-    specializationId: $id
-  ) {
+query specialtiesBySpecialization($id: ID!) {
+  specialtiesBySpecialization(specializationId: $id) {
     data {
       id
       arName
       enName
-      
     }
+    code
+    success
+    message
+  }
+}
+
+mutation generateUploadLink(
+  $contentType: String!
+  $model: FileModelEnum!
+  $fileName: String!
+  $sizeInBytes: Float!
+) {
+  generateUploadLink(
+    input: {
+      contentType: $contentType
+      fileName: $fileName
+      model: $model
+      sizeInBytes: $sizeInBytes
+    }
+  ) {
+    data
     code
     success
     message

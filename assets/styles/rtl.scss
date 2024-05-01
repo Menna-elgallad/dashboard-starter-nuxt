@@ -51,9 +51,15 @@
     .el-table .cell{
         text-align: right;
     }
-    .el-upload-list--picture-card .el-upload-list__item{
-        margin-left: 8px !important;
-        margin-right: unset !important;
+    .el-form-item__error {
+        left : unset !important;
+        right: 0 !important;
+    }
+    .list-upload{
+        .el-upload-list--picture-card .el-upload-list__item{
+            margin-left: 8px !important;
+            margin-right: unset !important;
+        }
     }
     .el-upload-list--picture-card .el-upload-list__item-actions span + span {
         margin-left: unset !important;

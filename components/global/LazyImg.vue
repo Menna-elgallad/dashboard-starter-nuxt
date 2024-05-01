@@ -40,10 +40,11 @@ function getImageRedirectedLink(link: string) {
 if (props.src) {
   getImageRedirectedLink(props.src);
 }
-
+console.log("props.src", props.src);
 watch(
   () => props.src,
   async () => {
+    console.log("props.src", props.src);
     getImageRedirectedLink(props.src);
   }
 );
