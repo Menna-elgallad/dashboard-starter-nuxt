@@ -1,6 +1,6 @@
 <template lang="pug">
-el-form-item(:label="label" :error='errorMessage' :class="class")
-    el-upload.avatar-uploader(action='#' class="w-fit" v-loading="loading" :name="name" :http-request="handleUploadRequest" list-type='picture-card'  :show-file-list="false"	  :on-success="handleUploadSuccess" :before-upload="beforeAvatarUpload")
+el-form-item(:label="label" :error='errorMessage' )
+    el-upload.avatar-uploader( action='#' class="w-fit" v-loading="loading" :name="name" :http-request="handleUploadRequest" list-type='picture-card'  :show-file-list="false"	  :on-success="handleUploadSuccess" :before-upload="beforeAvatarUpload")
         ul.el-upload-list.el-upload-list--picture-card(v-if='inputValue')
             li.el-upload-list__item.is-ready(class="!m-0 rtl:!ml-0")
                 LazyImg.w-full.el-upload-list__item-thumbnail(:src='inputValue')
@@ -48,11 +48,7 @@ const props = defineProps({
     default: "",
     required: false,
   },
-  class: {
-    type: String,
-    default: "",
-    required: false,
-  },
+
   label: {
     type: String,
     required: true,
@@ -64,6 +60,21 @@ const props = defineProps({
   disabled: {
     type: Boolean,
     default: false,
+    required: false,
+  },
+  sizeInMb: {
+    type: Number,
+    default: 2,
+  },
+  formats: {
+    type: Array,
+    default: [
+      "image/jpg",
+      "image/jpeg",
+      "image/png",
+      "image/webp",
+      "image/svg+xml",
+    ],
     required: false,
   },
 });
@@ -100,10 +111,14 @@ const handlePictureCardPreview = () => {
 
 const beforeAvatarUpload: UploadProps["beforeUpload"] = (rawFile) => {
   console.log("rawFile", rawFile);
-  if (rawFile.type !== "image/jpeg") {
-    ElMessage.error("Avatar picture must be JPG format!");
+  if (!props.formats.includes(rawFile.type)) {
+    ElMessage.error({
+      message: `Avatar picture cannot accept ${props.formats
+        .map((format) => format.split("/").pop())
+        .join(" , ")}`,
+    });
     return false;
-  } else if (rawFile.size / 1024 / 1024 > 2) {
+  } else if (rawFile.size / 1024 / 1024 > props.sizeInMb) {
     ElMessage.error("Avatar picture size can not exceed 2MB!");
     return false;
   }

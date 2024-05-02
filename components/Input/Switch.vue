@@ -1,17 +1,18 @@
 <template lang="pug">
-el-form-item(:label="label" :error='errorMessage' )
-    
-    el-input(size="large" :type="type" :autocomplete="type==='password' ? 'new-password' : null" :show-password="type==='password' ? true : null"  :placeholder='placeholder ? placeholder : $t("enter") + label' v-model='inputValue' :disabled="disabled" :name="name")
+el-form-item(:error='errorMessage' )
+    el-switch(size="large"  :inline-prompt="inside"  :active-text="activeText" :inactive-text="inactiveText" :placeholder='placeholder ? placeholder : $t("enter") + label' v-model='inputValue' :disabled="disabled" :name="name")
+        template(#active-action='' v-if="activeIcon")
+                span.custom-active-action
+                     Icon(:name="activeIcon")
+        template(#inactive-action='' v-if="inactiveIcon")
+                span.custom-inactive-action 
+                    Icon(:name="inactiveIcon" )
+
 </template>
 
 <script setup lang="ts">
 import { useField } from "vee-validate";
 const props = defineProps({
-  type: {
-    type: String,
-    default: "text",
-    required: false,
-  },
   name: {
     type: String,
     default: "",
@@ -23,10 +24,6 @@ const props = defineProps({
     required: false,
   },
 
-  label: {
-    type: String,
-    required: true,
-  },
   placeholder: {
     type: String,
     default: "",
@@ -35,6 +32,26 @@ const props = defineProps({
     type: Boolean,
     default: false,
     required: false,
+  },
+  activeText: {
+    type: String,
+    required: false,
+  },
+  inactiveText: {
+    type: String,
+    required: false,
+  },
+  inside: {
+    type: Boolean,
+    default: false,
+  },
+  activeIcon: {
+    type: String,
+    default: "",
+  },
+  inactiveIcon: {
+    type: String,
+    default: "",
   },
 });
 // use `toRef` to create reactive references to `name` prop which is passed to `useField`
@@ -51,7 +68,7 @@ const {
   handleChange,
   meta,
 } = useField(props.name, undefined, {
-  initialValue: props.value,
+  initialValue: props.value ? props.value : false,
 });
 
 if (props.value) {

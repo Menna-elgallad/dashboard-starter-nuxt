@@ -225,7 +225,7 @@ pointer-events: none
     &:hover{  
         border-color:$primary;
         color: $primary;
-        box-shadow: 0 0 0px 4px $shadow ;
+        box-shadow: 0 0 0px 4px $primary-light ;
         }
     &.bg-colored {
         background-color:   $primary;
@@ -311,4 +311,17 @@ pointer-events: none
       background-image: url("/assets/icon/setting.svg");  
   }
 
+}
+
+.endBar{
+  position: fixed;
+  bottom: 0;
+  background-color: white;
+  width: 100vw;
+  padding: 1rem 3rem;
+  display: flex;
+  justify-content: flex-end;
+  right: 0;
+  box-shadow: 0px 6px 15px 2px #cccc;
+  z-index: 2;
 }

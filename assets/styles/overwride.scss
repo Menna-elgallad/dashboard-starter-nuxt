@@ -6,7 +6,7 @@
 --el-color-primary-light-8: #3b14373d !important;
 --el-color-primary-light-9:#3b143720  !important;
 --el-menu-base-level-padding : 30px !important;
---el-menu-hover-bg-color : #{$shadow} !important ; 
+--el-menu-hover-bg-color : #{$primary-light} !important ; 
 --el-input-border-radius: #{$raduis-input} !important;
 --el-upload-size : 160px !important
 }
@@ -67,6 +67,14 @@ color: var(--el-table-text-color);
     --el-border-color : #{$error} !important;
 }
 
+.el-tag.el-tag--info {
+    --el-tag-bg-color: #{$primary-light} !important;
+    --el-tag-border-color: #{$primary-light} !important;
+    --el-tag-hover-color:  #{$primary-light-hover} !important ;
+    --el-tag-text-color : #{$primary} !important;
+    border-radius  :  $raduis-input !important;
+}
+
 .el-menu.el-menu-vertical-demo {
     padding-left: 5px ;
     min-height: 100vh !important;
@@ -83,11 +91,11 @@ color: var(--el-table-text-color);
     }
     .el-menu-item:hover , .el-sub-menu__title:hover {
         color: $primary !important;
-        background-color: $shadow !important ;
+        background-color: $primary-light !important ;
     }
     .el-menu-item.is-active {
         color: $primary !important ;
-        background-color: $shadow !important ;
+        background-color: $primary-light !important ;
     }
     .el-sub-menu__title{
         border-radius:$raduis-lg;
@@ -294,7 +302,7 @@ input.vti__input {
 }
 
 .el-dropdown__popper {
-    --el-dropdown-menuItem-hover-fill: #{$shadow} !important;
+    --el-dropdown-menuItem-hover-fill: #{$primary-light} !important;
 } 
 
 .el-dropdown-menu ,.el-menu--popup-container{
@@ -513,11 +521,7 @@ color: var(--el-text-color-regular);
     border-radius: $raduis-lg !important;
 }
 
-.el-icon {
-    svg{
-        color: $primary !important
-    }
-} 
+
 
 .el-breadcrumb__inner a:hover, .el-breadcrumb__inner.is-link:hover {
     color: $primary !important;
@@ -562,4 +566,8 @@ color: var(--el-text-color-regular);
 }
 .el-form-item__error {
     padding: 0.5rem !important;
+}
+
+.el-message { 
+    border-radius: $raduis-input !important;
 }

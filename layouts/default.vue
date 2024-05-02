@@ -1,7 +1,7 @@
 <template lang="pug">
 section
     #allTheNav 
-      .nav2
+      .nav
         Menu
     #main(:class="[fullNav && !mobile  ? 'marginedStart' : (mobile ? 'notMargined' :'collapseMargin' )] ")
       nav.navbar(  :class="{'marginedStart': fullNav && !mobile,'collapseMargin': !mobile && !fullNav,'notMargined': mobile && !fullNav,'navbar-scroll': showNavbar}" class="!pt-4 z-20 navbar") 
@@ -160,7 +160,7 @@ watch(width, () => {
 #allTheNav {
   position: relative;
   left: 0;
-  .nav2 {
+  .nav {
     top: 0;
     background-color: white;
     z-index: 100;

@@ -66,7 +66,7 @@ const props = defineProps({
     color: $primary;
   }
   &:hover {
-    box-shadow: 0 0 0 0.2rem $shadow;
+    box-shadow: 0 0 0 0.2rem $primary-light;
   }
 }
 button {

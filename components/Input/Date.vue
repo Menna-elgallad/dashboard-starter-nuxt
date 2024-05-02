@@ -1,7 +1,6 @@
 <template lang="pug">
 el-form-item(:label="label" :error='errorMessage' )
-    
-    el-input(size="large" :type="type" :autocomplete="type==='password' ? 'new-password' : null" :show-password="type==='password' ? true : null"  :placeholder='placeholder ? placeholder : $t("enter") + label' v-model='inputValue' :disabled="disabled" :name="name")
+    el-date-picker(size="large"  type="date"  :placeholder='placeholder ? placeholder : $t("enter") + label' v-model='inputValue' :disabled="disabled" :name="name")
 </template>
 
 <script setup lang="ts">

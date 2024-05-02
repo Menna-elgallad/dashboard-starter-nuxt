@@ -1,13 +1,15 @@
 <template lang="pug">
-AppTable(v-slot="{data}" :columns="table.columns" :data="table.data" :sortOptions="table.sort"  )
-    tmeplate(#default)
-      .flex.items-center.py-2
-        .toggle-icon 
-          Icon.text-md(name="IconEye" )
+AppTable(v-slot="{data}" :columns="table.columns" :data="table.data" :sortOptions="table.sort" @handleRowClick="handleRowClick"  )
+      tmeplate(#actions)
+        .flex.items-center.py-2
+          .toggle-icon 
+            Icon.text-md(name="IconEye" )
 </template>
 
 <script setup lang="ts">
 const { t, tm, rt, locale } = useI18n();
+const localePath = useLocalePath();
+const router = useRouter();
 const table = reactive({
   columns: [
     {
@@ -166,6 +168,10 @@ const table = reactive({
 });
 
 table.data = table.data.map((e: any) => ({ ...e, price: e.price + " SAR" }));
+
+function handleRowClick(val: any) {
+  console.log(val);
+}
 </script>
 
 <style></style>

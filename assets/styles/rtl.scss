@@ -1,6 +1,6 @@
 [dir="rtl"] {
     #allTheNav {
-        .nav2 {
+        .nav {
             left : unset !important ;
             right : 0
         }
@@ -54,6 +54,14 @@
     .el-form-item__error {
         left : unset !important;
         right: 0 !important;
+    }
+    .el-tag{
+        padding-left: 5px !important;
+        padding-right: 9px !important;
+        .el-tag__close{
+            margin-left: unset !important;
+            margin-right: 6px !important;
+        }
     }
     .list-upload{
         .el-upload-list--picture-card .el-upload-list__item{

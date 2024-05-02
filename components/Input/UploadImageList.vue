@@ -1,5 +1,5 @@
 <template lang="pug">
-el-form-item(:label="label" :error='errorMessage' :class="class")
+el-form-item(:label="label" :error='errorMessage' )
   el-upload.w-fit.list-upload(v-model:file-list='inputValue' action='#' :name="name" :on-success="handleUploadSuccess"   v-loading="loading" :http-request="handleUploadRequest" list-type='picture-card' )
     el-icon
       plus
@@ -34,11 +34,7 @@ const props = defineProps({
     default: "",
     required: false,
   },
-  class: {
-    type: String,
-    default: "",
-    required: false,
-  },
+
   label: {
     type: String,
     required: true,

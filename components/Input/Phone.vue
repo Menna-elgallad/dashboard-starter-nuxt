@@ -1,6 +1,6 @@
 <template lang="pug">
-el-form-item(:label="label"  class="xl:col-span-2 col-span-1"  :error='errorMessage')
-  vue-tel-input.form-control( :disabled="disabled" v-model="phoneNumber"  :value="inputValue" :inputOptions="{type : 'tel', placeholder: placeholder}"  :dropdownOptions="{showSearchBox : true , showFlags:true , showDialCodeInSelection: true , showDialCodeInList: true }"   @validate="validatecode"   :validCharactersOnly="true"  placeholder="12 123 45 67"  mode="international"  @input="handleChange" @blur="handleBlur"  :class="{'is-invalid': errorMessage, valid: meta.valid , 'p-invali-input': errorMessage  }"  defaultCountry="EG")
+el-form-item(:label="label"    :error='errorMessage')
+  vue-tel-input.form-control( :disabled="disabled" v-model="phoneNumber"  :value="inputValue" :inputOptions="{type : 'tel', placeholder: placeholder ? placeholder : $t('enter') + label}"  :dropdownOptions="{showSearchBox : true , showFlags:true , showDialCodeInSelection: true , showDialCodeInList: true }"   @validate="validatecode"   :validCharactersOnly="true"  placeholder="12 123 45 67"  mode="international"  @input="handleChange" @blur="handleBlur"  :class="{'is-invalid': errorMessage, valid: meta.valid , 'p-invali-input': errorMessage  }"  defaultCountry="EG")
   
 </template>
 
@@ -81,5 +81,4 @@ const {
 phoneNumber.value = inputValue.value;
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>

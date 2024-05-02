@@ -1,6 +1,5 @@
 <template lang="pug">
-.blogs.content  
-    
+div 
     .topBar.flex.items-center.flex-wrap.gap-2(class="sm:justify-between justify-center")
         .input(class=" xl:w-1/4 lg:w-1/2 w-full min-w-[350px]")
             el-input(size="large" 
@@ -10,7 +9,7 @@
                 @input="searchTimeOut"
             )
     .containerr.mt-4      
-        el-table(:data='data' style='width:100%'  @current-change="handleCurrentChange"   @sort-change="handleSortChange" @filter-change="handleFilterChange"  :row-class-name="tableRowClassName" )
+        el-table(:data='data' style='width:100%'  @current-change="(val)=> $emit('handleRowClick' , val)"   @sort-change="handleSortChange" @filter-change="handleFilterChange"  :row-class-name="tableRowClassName" )
             el-table-column( min-width="250" :show-overflow-tooltip="true"   v-for="column in columns"  :filtered-value="filters[column?.prop]"  :filters="column.filters"  :prop="column.prop" :label="column.label"  :column-key="column.prop" :sortable="column?.sortable ? 'custom' : undefined"    :class-name="sortOptions?.find(option=> option.value ===sort?.value && option.prop===column.prop )?.order || 'menna'"   )
                
                 template(#default="scope")
@@ -32,15 +31,15 @@
         .pagination.flex.items-center.flex-wrap.gap-2(class="sm:justify-between justify-center")
             
             span.text-xs.text-main-gray.font-medium  {{`${t("showing")} ${currentPage===1 ? currentPage : ((currentPage-1)*limit)+1   } - ${currentPage*limit <= pageInfo?.totalCount ? currentPage*limit : pageInfo?.totalCount   } ${t('from')}  ${pageInfo?.totalCount ? pageInfo?.totalCount : 0 }`  }}
-            el-pagination( :pager-count="4"  :page-count="pageInfo?.totalPages" v-model:current-page='currentPage' :page-size='limit'  layout=' prev, pager, next' :total='pageInfo?.totalCount' @current-change="handleCurrentChange" )
+            el-pagination( :pager-count="4"  :page-count="pageInfo?.totalPages" v-model:current-page='currentPage' :page-size='limit'  layout=' prev, pager, next' :total='pageInfo?.totalCount' )
 
 </template>
 
 <script setup lang="ts">
 import { Calendar, Search } from "@element-plus/icons-vue";
 const { t, locale } = useI18n();
-import useQuery from "~/composables/queryParams";
 
+import useQuery from "~/composables/queryParams";
 const props = defineProps({
   columns: {
     type: Array,

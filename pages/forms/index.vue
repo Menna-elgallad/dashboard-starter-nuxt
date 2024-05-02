@@ -1,46 +1,72 @@
 <template lang="pug">
-el-form(    @submit.prevent='onSubmit'   ref="myForm" label-position="top"  :validationSchema="formSchema" )
-        .formItems(class="grid grid-cols-1  xl:grid-cols-2 gap-3")
-                InputUploadImageList(label="List Images"  name="listImages")
-                InputText(:label="$t('name')" placeholder="Name" name="name" class="xl:col-span-2 col-span-1" value="Amer")
-                InputText(:label="$t('address')" placeholder="Address" name="address" value="cairo")
-                InputSelect(:label="$t('phone')" placeholder="City" name="city")
-                InputPhone(:padding="0.313" @validphone="validatecode" :label="$t('phone')" placeholder="enter Your Phone Number" name="phone" mode="international")
-                InputUploadImage(label="avatar"  name="avatar") 
-        AppButton(title="Create" type="submit") 
+el-form.pb-28(  autocomplete="off"   @submit.prevent='onSubmit'   ref="myForm" label-position="top"  :validationSchema="formSchema" )
+        .flex.justify-end 
+            InputSwitch( name="switch" active-text="Open" inactive-text="Close" :inside="true" )
+        .formItems(class="grid grid-cols-1 md:grid-cols-2   gap-3")
+                InputUploadImage(:label="$t('avatar')"  name="avatar" class="col-span-1 md:col-span-2"   ) 
+                InputText(:label="$t('name')"  name="name" )
+                InputText(:label="$t('address')"  name="address" )
+                InputSelect(:label="$t('country')"  name="country" :options="countryOptions")
+                InputPhone( @validphone="validatecode" :label="$t('phone')"  name="phone" mode="international")
+                InputText(:label="$t('password')"  name="password" :type="'password'" )
+                InputSelect(:label="$t('city')"  name="city" :options="cityOptions" :isMultiple='true' )
+                InputDate(:label="$t('date')"  name="date"   )
+                InputUploadImageList(:label="$t('listImages')"  name="listImages" class="col-span-1 md:col-span-2" )
+        .endBar 
+            .flex.justify-end.gap-3
+                AppButton(:title="$t('cancel')" :selected="false" :outline="true"  type="button" )
+                AppButton(:title="$t('submit')" :selected="true" type="submit" )
 </template>
 
 <script lang="ts" setup>
 import { ar } from "yup-locales";
 import { useForm } from "vee-validate";
 import * as yup from "yup";
-const { locale } = useI18n();
+const { locale, t } = useI18n();
 if (locale.value == "ar") {
   yup.setLocale(ar);
 }
-const myForm = ref();
 
+const myForm = ref();
 const validPhone = ref(true);
 function validatecode(val: any) {
   validPhone.value = val;
 }
 
 const formSchema = yup.object({
-  name: yup.string().required(),
-  address: yup.string().required(),
-  avatar: yup.string().required().label("Avatar"),
-  city: yup.string().required(),
-  listImages: yup.array().min(1).required(),
+  name: yup.string().required().label(t("name")),
+  date: yup.string().required().label(t("date")),
+  password: yup.string().required().label(t("password")),
+  address: yup.string().required().label(t("address")),
+  avatar: yup.string().required().label(t("avatar")),
+  city: yup.array().of(yup.string()).required().min(1).label(t("city")),
+  country: yup.string().required().label(t("country")),
+
+  listImages: yup.array().min(1).required().label(t("listImages")),
+  switch: yup.boolean(),
   phone: yup
     .number()
     .transform((value: any) => (Number.isNaN(value) ? null : value))
     .nullable()
     .required()
-    .label("phone Number")
-    .test("Phone number", `invalid Phone`, function (value: any) {
+    .label(t("phone"))
+    .test("Phone number", t("invalidPhone"), function (value: any) {
       return validPhone.value ? true : false;
     }),
 });
+
+const cityOptions = [
+  { label: "Cairo", value: "Cairo" },
+  { label: "Alexandria", value: "Alexandria" },
+  { label: "Giza", value: "Giza" },
+  { label: "Sharm El Sheikh", value: "Sharm El Sheikh" },
+];
+const countryOptions = [
+  { label: "Saudi Arabia", value: "Saudi Arabia" },
+  { label: "United Arab Emirates", value: "United Arab Emirates" },
+  { label: "Kuwait", value: "Kuwait" },
+  { label: "Bahrain", value: "Bahrain" },
+];
 
 const { handleSubmit } = useForm({
   validationSchema: formSchema,
