@@ -22,6 +22,7 @@ avatar: "Avatar"
 invalidPhone: "Invalid Phone Number"
 country: "Country"
 date: "Date"
+password: "Password"
 # pages
 forms: "Forms"
 tables: "Tables"

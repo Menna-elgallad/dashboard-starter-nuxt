@@ -21,6 +21,7 @@ avatar: "الصورة الشخصية"
 invalidPhone: "رقم الهاتف غير صحيح"
 country: "الدولة"
 date: "التاريخ"
+password: "كلمة المرور"
 # pages
 forms: "استمارات"
 tables: "جداول"

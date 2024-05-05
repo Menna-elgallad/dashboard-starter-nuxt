@@ -27,8 +27,8 @@ el-form-item(:label="label" :error='errorMessage' )
                 :resizeImage="{ wheel: false }"
                 ref="cropper")
             .flex.w-full.gap-2.justify-between.mt-8
-                AppButton(title="Cancel" :selected="false"  @click="dialogCrop= false").w-full
-                AppButton(title="Save" :selected="true" @click="cropImage").w-full     
+                //- AppButton(title="Cancel" :selected="false"  @click="dialogCrop= false").w-full
+                //- AppButton(title="Save" :selected="true" @click="cropImage").w-full     
 </template>
 
 <script lang="ts" setup>
@@ -168,7 +168,7 @@ watch(inputValue, () => {
 <style lang="scss">
 .avatar-uploader .el-upload {
   border: 1px dashed var(--el-border-color);
-  border-radius: $raduis-input;
+  border-radius: $raduis-base;
   cursor: pointer;
   position: relative;
   overflow: hidden;
@@ -185,5 +185,8 @@ watch(inputValue, () => {
   width: 178px;
   height: 178px;
   text-align: center;
+}
+.el-upload-list__item-thumbnail {
+  border-radius: $raduis-base;
 }
 </style>

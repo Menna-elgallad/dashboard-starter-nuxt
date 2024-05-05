@@ -14,8 +14,8 @@ el-form.pb-28(  autocomplete="off"   @submit.prevent='onSubmit'   ref="myForm" l
                 InputUploadImageList(:label="$t('listImages')"  name="listImages" class="col-span-1 md:col-span-2" )
         .endBar 
             .flex.justify-end.gap-3
-                AppButton(:title="$t('cancel')" :selected="false" :outline="true"  type="button" )
-                AppButton(:title="$t('submit')" :selected="true" type="submit" )
+                el-button( size="large" round  ) {{ $t('cancel') }}
+                el-button( size="large" round type="primary" ) {{ t('submit') }}
 </template>
 
 <script lang="ts" setup>

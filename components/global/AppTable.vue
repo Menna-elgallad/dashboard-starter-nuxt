@@ -23,15 +23,15 @@ div
               
             el-table-column(:label="$t('actions')" min-width="150")
               template(#default="scope")
-                  slot(:data="scope.row") 
+                  slot(:data="scope.row"  ) 
 
-        el-dialog(v-model='fileShow' class="file"  class="xl:!w-1/3 lg:!w-1/3 sm:!w-[90%] !w-full " align-center='' )
+        el-dialog(v-model='fileShow'   class=" !bg-transparent  !shadow-none xl:!w-1/3 lg:!w-1/3 sm:!w-[90%] !w-full " align-center='' )
                 LazyImg.m-auto(:src="srcOverlay" :key="srcOverlay" ) 
      
-        .pagination.flex.items-center.flex-wrap.gap-2(class="sm:justify-between justify-center")
+        .pagination.flex.items-center.flex-wrap.gap-2(class=" sm:justify-between justify-center")
             
             span.text-xs.text-main-gray.font-medium  {{`${t("showing")} ${currentPage===1 ? currentPage : ((currentPage-1)*limit)+1   } - ${currentPage*limit <= pageInfo?.totalCount ? currentPage*limit : pageInfo?.totalCount   } ${t('from')}  ${pageInfo?.totalCount ? pageInfo?.totalCount : 0 }`  }}
-            el-pagination( :pager-count="4"  :page-count="pageInfo?.totalPages" v-model:current-page='currentPage' :page-size='limit'  layout=' prev, pager, next' :total='pageInfo?.totalCount' )
+            el-pagination( background style="direction:ltr"  :pager-count="4"  :page-count="pageInfo?.totalPages" v-model:current-page='currentPage' :page-size='limit'  layout=' prev, pager, next' :total='pageInfo?.totalCount' )
 
 </template>
 

@@ -1,6 +1,6 @@
 <template lang="pug">
 el-form-item(:label="label" :error='errorMessage' )
-  el-upload.w-fit.list-upload(v-model:file-list='inputValue' action='#' :name="name" :on-success="handleUploadSuccess"   v-loading="loading" :http-request="handleUploadRequest" list-type='picture-card' )
+  el-upload.w-fit.list-upload.avatar-uploader(v-model:file-list='inputValue' action='#' :name="name" :on-success="handleUploadSuccess"   v-loading="loading" :http-request="handleUploadRequest" list-type='picture-card' )
     el-icon
       plus
     template(#file='{ file }')
@@ -94,3 +94,13 @@ if (props.value) {
   inputValue.value = props.value;
 }
 </script>
+
+<style lang="scss">
+.el-upload-list {
+  &--picture-card {
+    .el-upload-list__item {
+      border-radius: $raduis-base;
+    }
+  }
+}
+</style>

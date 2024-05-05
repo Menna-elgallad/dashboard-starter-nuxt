@@ -1,3 +1,5 @@
+
+
 // app colors
 $primary:#3B1437;
 $primary-hover:#3B1437;
@@ -6,32 +8,78 @@ $primary-light-hover:#e2dce1;
 $primary-Light-active: #c2b6c1;
 $brown : #686252 ; 
 $brown-light : #686252 ; 
-$green : #2FB350 ; 
-$red : #BF2C24; 
-$gray : #e7e7e7;
-
-
-$background-gray : #FCFCFC;
+$sucess : #2FB350 ; 
+$danger : #BF2C24; 
+$info : #e7e7e7;  
+$error : rgb(255, 104, 104) ; 
+//
 $border: #E4E4E4;
+//
+$raduis-base : 1.5rem;
 $raduis-md : 0.5rem;
 $raduis-lg : 1rem;
-$raduis-input : 1.5rem;
+//
 $height-input : 50px ; 
-$error : rgb(255, 104, 104) ; 
-$border-gray: #CED1DC;
-$lighter-gray: #ECEDED;
-$light-gray: #ECEDED;
 
 
-$--colors: (
-  'primary': (
-    'base': $primary-hover,
-  ),
-);
 
 @forward 'element-plus/theme-chalk/src/common/var.scss' with (
-  $colors: $--colors,
+  $colors: (
+    'primary': (
+      'base': $primary,
+      ),
+      'success' : (
+        'base': $sucess,
+      ),
+      'danger' : (
+        'base': $danger,
+      ),
+      'warning' : (
+        'base': $brown,
+      ),
+      'info' : (
+        'base': $primary-light,
+      ),
+      
+      
+     
+  ),
+  $fill-color:(
+    'dark' : $primary,
+    'light' : $primary-light ,
+  ) ,
+  $border-radius:(
+    'base':  $raduis-base,
+    'small': 2px,
+    'round': 20px,
+    'circle': 100%,
+  ),
 
+  $select-dropdown :(
+    'padding' : 1rem  , 
+  ),
+  $border-color-hover: $primary-hover ,
+
+  $pagination:(
+    'item-gap': 20px,
+  ) , 
+  $dropdown : (
+    'padding' : 1rem , 
+  ),
+
+
+  $common-component-size :(
+    'large' :  $height-input,
+  ),
+  $popper : (
+    'border-radius': $raduis-base,
+    'padding' : 1rem , 
+    'border' : none
+  ),
+
+  
 );
 
+
 @use 'element-plus/theme-chalk/src/index.scss' as *;
+

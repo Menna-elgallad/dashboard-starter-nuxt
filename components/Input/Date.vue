@@ -1,6 +1,6 @@
 <template lang="pug">
 el-form-item(:label="label" :error='errorMessage' )
-    el-date-picker(size="large"  type="date"  :placeholder='placeholder ? placeholder : $t("enter") + label' v-model='inputValue' :disabled="disabled" :name="name")
+    el-date-picker( class="!w-full" size="large"  type="date"  :placeholder='placeholder ? placeholder : $t("enter") + label' v-model='inputValue' :disabled="disabled" :name="name")
 </template>
 
 <script setup lang="ts">

@@ -21,15 +21,17 @@
             direction: rtl;
         }
     }
+    .myicon{
+        margin-left: 5px !important;
+        margin-right: -6px !important;}
+
     // elment-plus
     .el-menu.el-menu-vertical-demo{
         border-left: solid 1px var(--el-menu-border-color);
         padding-left: unset !important;
-        padding-right: 5px ;
-        .el-menu-item [class^=el-icon] ,.el-sub-menu .el-icon {
-            margin-right: unset !important;
-            margin-left: 8px !important;
-        }
+        padding-right: 7px ;
+       
+        
         .el-sub-menu__icon-arrow {
             left:  var(--el-menu-base-level-padding);
             right:  unset !important;

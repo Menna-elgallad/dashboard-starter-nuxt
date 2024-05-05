@@ -110,7 +110,7 @@ div(class="w-[100vw] h-[100vh]")
             small.mt-2(:class="{'error-msg' : errormsg}" class=" opacity-0") {{errormsg}}
 
             el-form-item.mt-2
-              AppButton.mt-3( :icon="!loading ? 'eos-icons:three-dots-loading' : null" :title="loading ? 'Login' : '' " @click='submitForm(ruleFormRef)' :selected="loading" type="submit" class="w-full")
+              //- AppButton.mt-3( :icon="!loading ? 'eos-icons:three-dots-loading' : null" :title="loading ? 'Login' : '' " @click='submitForm(ruleFormRef)' :selected="loading" type="submit" class="w-full")
 
         .footer.mb-3.ml-3.text-gray-500.text-sm 
           //- a( class="flex align-items-center"

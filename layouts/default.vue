@@ -10,10 +10,10 @@ section
             button.toggle-icon(@click="openNav" :class="{'margined' : !fullNav}"): Icon.text-sm(name="ph:list-bold")
           .tools.flex.gap-3.items-center
             .lang-switcher  
-                a(:href="switchLocalePath(locale==='ar' ? 'en' :'ar')"): AppButton( :title="locale==='ar' ? 'English' : 'العربية' " outlined="true"  )
-            el-dropdown
-                  .el-dropdown-link
-                      div.flex.gap-2.items-center 
+                a(:href="switchLocalePath(locale==='ar' ? 'en' :'ar')"): el-button(  round  ) {{ locale==='ar' ? 'English' : 'العربية'  }}
+            el-dropdown(class="outline-0")
+                
+                  div.flex.gap-2.items-center.outline-0.border-0 
                         Avatar(src="/images/avatar.svg" small)
                         .text 
                             p.text-xs.font-medium Omar Abdulazeez
@@ -133,14 +133,6 @@ watch(width, () => {
 </script>
 
 <style lang="scss" scoped>
-.dropdown-menu2 {
-  background-color: white;
-  border-radius: 9px;
-  padding: 12px 16px;
-  z-index: 1000;
-  box-shadow: 0 0 8px 2px #cfcfcf4a;
-}
-
 #main {
   height: fit-content;
   margin-top: 50px;

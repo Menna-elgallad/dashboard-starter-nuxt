@@ -27,12 +27,12 @@ const labelType = computed(() => {
       color: $primary;
     }
     &-red {
-      border: 1px solid $red;
-      color: $red;
+      border: 1px solid $danger;
+      color: $danger;
     }
     &-green {
-      border: 1px solid $green;
-      color: $green;
+      border: 1px solid $sucess;
+      color: $sucess;
     }
     &-brown {
       border: 1px solid $brown;
@@ -45,12 +45,12 @@ const labelType = computed(() => {
     //   color: $primary;
     // }
     // &-red {
-    //   border: 1px solid $red;
-    //   color: $red;
+    //   border: 1px solid $danger;
+    //   color: $danger;
     // }
     // &-green {
-    //   border: 1px solid $green;
-    //   color: $green;
+    //   border: 1px solid $sucess;
+    //   color: $sucess;
     // }
     &-brown {
       border: 1px solid $brown;

@@ -1,6 +1,6 @@
 <template lang="pug">
-el-form-item(:label="label"    :error='errorMessage')
-  vue-tel-input.form-control( :disabled="disabled" v-model="phoneNumber"  :value="inputValue" :inputOptions="{type : 'tel', placeholder: placeholder ? placeholder : $t('enter') + label}"  :dropdownOptions="{showSearchBox : true , showFlags:true , showDialCodeInSelection: true , showDialCodeInList: true }"   @validate="validatecode"   :validCharactersOnly="true"  placeholder="12 123 45 67"  mode="international"  @input="handleChange" @blur="handleBlur"  :class="{'is-invalid': errorMessage, valid: meta.valid , 'p-invali-input': errorMessage  }"  defaultCountry="EG")
+el-form-item(:label="label"  :error='errorMessage')
+  vue-tel-input.form-control.w-full( :disabled="disabled" v-model="phoneNumber"  :value="inputValue" :inputOptions="{type : 'tel', placeholder: placeholder ? placeholder : $t('enter') + label}"  :dropdownOptions="{showSearchBox : true , showFlags:true , showDialCodeInSelection: true , showDialCodeInList: true }"   @validate="validatecode"   :validCharactersOnly="true"  placeholder="12 123 45 67"  mode="international"  @input="handleChange" @blur="handleBlur"  :class="{'is-invalid': errorMessage, valid: meta.valid , 'p-invali-input': errorMessage  }"  defaultCountry="EG")
   
 </template>
 
@@ -81,4 +81,48 @@ const {
 phoneNumber.value = inputValue.value;
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.vue-tel-input {
+  border-radius: $raduis-base !important;
+  border: 1px solid $info !important;
+  height: $height-input;
+  transition: all 0.5s ease;
+  &:hover {
+    border-color: $primary !important;
+  }
+  &:focus-within {
+    border-color: $primary !important;
+    box-shadow: none !important;
+  }
+}
+
+.vti__dropdown-item {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.vti__search_box {
+  width: 100% !important;
+  border-radius: $raduis-base !important;
+  border-bottom: 1px solid #ccc;
+  margin: 0;
+}
+.vti__dropdown {
+  border-radius: $raduis-base;
+  padding: 0.2rem 1rem;
+}
+input.vti__input {
+  border-top-right-radius: $raduis-base !important;
+  border-bottom-right-radius: $raduis-base !important;
+}
+.vti__dropdown-list.below,
+.vti__dropdown-list.above {
+  border-radius: $raduis-base !important;
+  padding: 12px;
+}
+.el-form-item.is-error {
+  .vue-tel-input {
+    border-color: $error !important;
+  }
+}
+</style>

@@ -25,6 +25,7 @@ export default defineNuxtConfig({
   },
 
   modules: [
+    "@element-plus/nuxt", 
     "nuxt-graphql-client",
     "nuxt-icon",
     "@nuxtjs/tailwindcss",
@@ -32,6 +33,7 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "@nuxtjs/i18n"
   ],
+
 
   runtimeConfig: {
     public: {
@@ -61,8 +63,6 @@ export default defineNuxtConfig({
         dir: "rtl",
       },
     ],
- 
-
     defaultLocale: "en",
     lazy: false,
     langDir: "locales",
