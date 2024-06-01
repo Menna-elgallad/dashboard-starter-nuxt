@@ -1,14 +1,21 @@
 <template lang="pug">
-el-form-item(:error='errorMessage' :label="label"  )
-    el-select(size="large"   v-model="inputValue" filterable :reserve-keyword="false"  :multiple="isMultiple"  :disabled="disabled" :placeholder="placeholder ? placeholder :  $t('choose') + label "  )
-        el-option(
+el-form-item(:error='errorMessage' :label="label" class="!mb-6")
+  el-select(size="large"   v-model="inputValue" filterable :reserve-keyword="false"  :multiple="isMultiple"  :disabled="disabled" :placeholder="placeholder ? placeholder :  $t('choose') + label ")
+    div(
+      v-infinite-scroll="load"
+      infinite-scroll-immediate
+      class="w-full"
+      class="{'h-[200px]' : options?.length > 10}")
+      el-option(
         v-for="item in options"
         :key="item.value"
         :label="item.label"
-        :value="item.value")
+        :value="item.value"
+        )
+
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { useField } from "vee-validate";
 const props = defineProps({
   type: {
@@ -50,15 +57,11 @@ const props = defineProps({
     default: false,
     required: false,
   },
+  firstOption: {
+    type: Boolean,
+    default: false,
+  },
 });
-
-// use `toRef` to create reactive references to `name` prop which is passed to `useField`
-// this is important because vee-validte needs to know if the field name changes
-// https://vee-validate.logaretm.com/v4/guide/composition-api/caveats
-
-// we don't provide any rules here because we are using form-level validation
-// https://vee-validate.logaretm.com/v4/guide/validation#form-level-validation
-
 const {
   value: inputValue,
   errorMessage,
@@ -66,14 +69,21 @@ const {
   handleChange,
   meta,
 } = useField(props.name, undefined, {
-  initialValue: props.isMultiple ? [] : props.value,
+  initialValue: props.isMultiple
+    ? []
+    : props.firstOption
+    ? props.options[0].value
+    : props.value,
 });
 
-if (props.value) {
-  inputValue.value = props.value;
-}
-</script>
+watchEffect(() => {
+  if (props.value) {
+    inputValue.value = props.value;
+  }
+});
 
-<style lang="scss" scoped>
-/* Firefox */
-</style>
+const emits = defineEmits(["loadMore"]);
+const load = () => {
+  emits("loadMore");
+};
+</script>

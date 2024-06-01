@@ -6,6 +6,7 @@ module.exports = {
     
       colors: {
         "primary": {DEFAULT : "#3B1437"},
+        "primary-light": {DEFAULT : "#ebe8eb"},
    
       },
       spacing: {

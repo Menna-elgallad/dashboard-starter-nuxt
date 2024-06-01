@@ -17,15 +17,14 @@ div.relative
                 span {{navLink.name}}
               el-menu-items(v-for="(subLink , subIndex) in navLink.submenu")
                   el-menu-item(:index="`${index+1}-${subIndex+1}`" :class="{'disabled-link' : getDisabled(subLink.role)  }" v-if="getDisabled(subLink.role)") {{subLink.name}}
-
-                  NuxtLink(:to="localePath(subLink.link)" v-else ): el-menu-item(:index="subLink.link"   @click="mobileNavigate(subLink.link)" ) {{subLink.name}}
+                  NuxtLink(:to="localePath(subLink.link)" v-else ): el-menu-item(:index="subLink.link"   @click="mobileNavigate(subLink.link)" :class="{'is-active' : route.fullPath.includes(subLink.link) && subLink.link!=='/' }"  ) {{subLink.name}}
           template(v-else) 
               el-menu-item(:index='`${index+1}`' :class="{'disabled-link' : getDisabled(navLink.role)  }"  v-if="navLink.link!=='/' && getDisabled(navLink.role) " )
                   el-icon 
                     Setting 
                   template(#title)  {{navLink.name}} 
               NuxtLink(:to="localePath(navLink.link)" v-else )
-                el-menu-item(:index='navLink.link'   @click="mobileNavigate(navLink.link)" )
+                el-menu-item(:index='navLink.link'   @click="mobileNavigate(navLink.link)" :class="{'is-active' : route.fullPath.includes(navLink.link) && navLink.link!=='/' }"  )
                           i.el-icon(:class="navLink.icon")
                           template(#title)  {{navLink.name}}
 
@@ -46,7 +45,7 @@ import {
 const mainStore = useMain();
 const { fullNav, mobile, hideNav } = storeToRefs(mainStore);
 const { permissions } = storeToRefs(mainStore);
-
+const route = useRoute();
 const router = useRouter();
 function mobileNavigate(link: string) {
   // router.push(localePath(link));
@@ -69,19 +68,16 @@ const menu = [
     name: t("home"),
     icon: "myicon home-icon",
     submenu: false,
-    role: "READ_STATISTICS",
   },
   {
     submenu: [
       {
         link: "/tables",
         name: t("table"),
-        role: "READ_CONSULTANT",
       },
       {
         link: "/forms",
         name: t("form"),
-        role: "READ_CONSULTANT",
       },
     ],
     name: t("tools"),

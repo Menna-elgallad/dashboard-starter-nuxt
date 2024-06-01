@@ -1,0 +1,8 @@
+ .el-button--large  {
+    --el-button-size : #{$height-button} !important;
+}
+.el-button--info {
+    --el-button-text-color: black !important ;
+    --el-button-hover-text-color: black !important ; 
+    --el-color-info: #{$info} !important;
+}

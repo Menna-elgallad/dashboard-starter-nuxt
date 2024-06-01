@@ -6,6 +6,8 @@ export const useAuthStore = defineStore("auth", {
   state: () => ({
     token: useLocalStorage("access_token", ""),
     loadingeChangePassword: false,
+    permissions: [],
+    lang : "en"
   }),
 
   hydrate(state, initialState) {
@@ -13,6 +15,10 @@ export const useAuthStore = defineStore("auth", {
   },
 
   actions: {
+    setLocale(lang : string) {
+      this.lang = lang
+      useGqlHeaders({ lang: `eg-${this.lang}` });
+    },
     setData(token: "") {
       useLocalStorage("access_token", token);
       this.token = token;
@@ -53,6 +59,39 @@ export const useAuthStore = defineStore("auth", {
         success: data.value.changeAdminPassword.success,
         message: data.value.changeAdminPassword.message,
       };
+    },
+    async loginBoard(values: any , successMessage : string) {
+      
+      // const { data } = await useAsyncGql("loginBoard", {
+      //   input: {
+      //     email: values.email,
+      //     password: values.password,
+      //     device: "DESKTOP",
+      //   },
+      // });
+
+      // useGqlToken(this.token);
+      ElMessage.success(useNuxtApp().$i18n.t("loggedInSuccessfully"));
+
+      // if (data.value.emailAndPasswordLoginBoard.success) {
+      //   this.setData(data.value.emailAndPasswordLoginBoard.data?.token);
+      //   this.permissions =  data.value.emailAndPasswordLoginBoard.data.securityGroup.permissions,
+
+      
+      
+      // } else {
+      //   ElNotification({
+      //     title: "Error",
+      //     type: "error",
+      //     message: formatTextWithUnderscore(
+      //       data.value.emailAndPasswordLoginBoard.message
+      //     ),
+      //   });
+      // }
+      // return {
+      //   success: data.value.emailAndPasswordLoginBoard.success,
+      //   message: data.value.emailAndPasswordLoginBoard.message,
+      // };
     },
   },
 });

@@ -1,5 +1,5 @@
 
-@import "/assets/styles/overwride.scss";
+@import "/assets/styles/element-plus";
 @import "/assets/styles/rtl.scss";
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap');
@@ -14,14 +14,15 @@ font-family: 'Poppins','Tajawal', sans-serif !important;
 
 }
 
-body {
-  overflow-x: hidden;
-}
+
 
 .nuxt-loading-indicator{
   height: 4px !important;
   opacity: 1 !important;
   background: repeating-linear-gradient(to right, $primary 0%, $primary 50%,$primary 100%) !important;
+}
+.heading {
+  scroll-margin-top: 100px;
 }
 
 ul {
@@ -76,32 +77,31 @@ ul {
 }
 
 .top-leave-active {
-  transition: all 0s ease-out;
+  transition: all 0s ease-in-out;
 }
 
 .slide-enter-active,
 .slide-leave-active {
-  transition: all 0.3s ease-out;
+  transition: all 0.5s ease-in-out;
 }
 
 .slide-enter-from {
   transform: translateY(-3%);
-  opacity: 0;
+  
 }
 
 .slide-enter-to,
 .slide-leave-from {
   transform: translateY(0);
-  opacity: 1;
+  
 
 }
 
 .slide-leave-to {
   transform: translateY(-3%);
-  opacity: 0;
+  
 
 }
-
 
 .list-enter-active,
 .list-leave-active {
@@ -120,17 +120,17 @@ ul {
       width: 5px;
     }
     &::-webkit-scrollbar-track {
-    
     border-radius: 15px;
     }
     &::-webkit-scrollbar-thumb {
-    background: $primary; 
+    background: $primary-light; 
     border-radius: 10px;
-    }
-  
+    }  
 }
 
+
 .toggle-icon {
+  outline:none !important;
   svg{
     transition: all 0.5s ease;
 
@@ -143,7 +143,7 @@ ul {
     transition: all 0.5s ease;
     &:hover {
         box-shadow:  0 0 0px 3px $border;
-        border : 1px solid $primary
+        border : 1px solid $primary ;
         svg{
           color: $primary !important;
           } 
@@ -162,7 +162,8 @@ ul {
 }
 
 .disabled {
-pointer-events: none
+pointer-events: none ; 
+opacity : 0.5;
 }
 
 #main , .navbar{
@@ -194,7 +195,7 @@ pointer-events: none
 
 
 
-.hideIncrement  {
+.hide-increment  {
   input[type=number]{
     -moz-appearance: textfield;
   }
@@ -293,18 +294,43 @@ pointer-events: none
   &.setting-icon {
       background-image: url("/assets/icon/setting.svg");  
   }
+  &.users-icon {
+      background-image: url("/assets/icon/users.svg");  
+  }
+  &.course-icon {
+      background-image: url("/assets/icon/course.svg");  
+  }
 
 }
+
+
 
 .endBar{
   position: fixed;
   bottom: 0;
   background-color: white;
   width: 100vw;
-  padding: 1rem 3rem;
   display: flex;
-  justify-content: flex-end;
   right: 0;
-  box-shadow: 0px 6px 15px 2px #cccc;
+  border-top : 1px solid $border ; 
   z-index: 2;
+  & > *{
+    padding: 1rem 3rem;
+  }
+}
+.marginedStart{
+  .endBar{
+    padding-left: 260px;
+  }
+}
+.collapseMargin{
+  .endBar{
+    padding-left: 80px;
+  }
+}
+
+.no-tabs{
+  .tabsLayout {
+    display: none;
+  }
 }

@@ -1,7 +1,10 @@
 <template lang="pug">
-el-form-item(:label="label" :error='errorMessage' )
-    
-    el-input(size="large" :type="type" :autocomplete="type==='password' ? 'new-password' : null" :show-password="type==='password' ? true : null"  :placeholder='placeholder ? placeholder : $t("enter") + label' v-model='inputValue' :disabled="disabled" :name="name")
+el-form-item(:label="label" :error='errorMessage' class="!mb-6")
+    template(#label)
+      p {{ label }} #[span.opacity-50  {{optional ?  $t("optional") : "" }}]
+    el-input(size="large" :type="type" rows='4' :inputmode="type==='number' ?'decimal' : ''" :autocomplete="type==='password' ? 'new-password' : null" :show-password="type==='password' ? true : null"  :placeholder='placeholder ? placeholder : $t("enter") + label' v-model='inputValue' :disabled="disabled" :name="name")
+      template(#append v-if="append") 
+        slot
 </template>
 
 <script setup lang="ts">
@@ -16,6 +19,9 @@ const props = defineProps({
     type: String,
     default: "",
     required: false,
+  },
+  append: {
+    type: Boolean,
   },
   value: {
     type: String,
@@ -36,13 +42,12 @@ const props = defineProps({
     default: false,
     required: false,
   },
+  optional: {
+    type: Boolean,
+    default: false,
+    required: false,
+  },
 });
-// use `toRef` to create reactive references to `name` prop which is passed to `useField`
-// this is important because vee-validte needs to know if the field name changes
-// https://vee-validate.logaretm.com/v4/guide/composition-api/caveats
-
-// we don't provide any rules here because we are using form-level validation
-// https://vee-validate.logaretm.com/v4/guide/validation#form-level-validation
 
 const {
   value: inputValue,
@@ -54,11 +59,23 @@ const {
   initialValue: props.value,
 });
 
-if (props.value) {
-  inputValue.value = props.value;
-}
+watchEffect(() => {
+  if (props.value) {
+    inputValue.value = props.value; // set value from parent
+  }
+});
 </script>
 
-<style lang="scss" scoped>
-/* Firefox */
+<style lang="scss">
+.hide {
+  &.el-form-item {
+    margin-bottom: 0 !important;
+    .el-form-item__content {
+      height: 0 !important;
+    }
+  }
+  .el-input {
+    display: none;
+  }
+}
 </style>

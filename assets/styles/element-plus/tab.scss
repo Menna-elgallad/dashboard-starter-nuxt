@@ -1,0 +1,14 @@
+.el-tabs__nav {
+    float:  unset !important;
+
+    &-wrap{
+        &::after{
+            background: transparent !important;
+        }
+       &.is-top{
+        width: fit-content !important;
+       }
+    }
+   
+        
+}

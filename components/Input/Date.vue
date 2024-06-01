@@ -1,5 +1,5 @@
 <template lang="pug">
-el-form-item(:label="label" :error='errorMessage' )
+el-form-item(:label="label" :error='errorMessage' class="!mb-6" )
     el-date-picker( class="!w-full" size="large"  type="date"  :placeholder='placeholder ? placeholder : $t("enter") + label' v-model='inputValue' :disabled="disabled" :name="name")
 </template>
 

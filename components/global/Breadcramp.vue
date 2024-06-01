@@ -13,7 +13,7 @@ ol(vocab='http://schema.org/' typeof='BreadcrumbList' class="breadcrumb" )
 </template>
 
 <script setup>
-const { t, tm, rt, locale  } = useI18n();
+const { t, tm, rt, locale } = useI18n();
 
 defineProps({
   title: {
@@ -26,29 +26,27 @@ const route = useRoute();
 const router = useRouter();
 
 const crumbs = computed(() => {
-  const fullPath = route.fullPath.replace('/ar', '');
-  const params = fullPath.startsWith('/')
-    ? fullPath.substring(1).split('/')
-    : fullPath.split('/');
+  const fullPath = route.fullPath.replace("/ar", "");
+  const params = fullPath.startsWith("/")
+    ? fullPath.substring(1).split("/")
+    : fullPath.split("/");
   const crumbs = [];
-  let path = '';
+  let path = "";
   params.forEach((param, index) => {
     path = `${path}/${param}`;
     const match = router.resolve(path);
     if (match.name !== null) {
       crumbs.push({
-        title: t(param.replace(/-/g, ' ').split("?")[0]),
+        title: t(param.replace(/-/g, " ").split("?")[0]),
         ...match,
       });
     }
   });
   return crumbs;
 });
-
-
 </script>
 
-<style lang="scss" >
+<style lang="scss">
 ol {
   list-style: none;
 
@@ -56,14 +54,14 @@ ol {
     display: inline;
 
     &:after {
-      content: ' » ';
+      content: " » ";
       display: inline;
       color: #aaa;
       padding: 0 0.0725em 0 0.15em;
     }
 
     &:last-child:after {
-      content: '';
+      content: "";
     }
 
     a {
@@ -71,12 +69,11 @@ ol {
     }
   }
 }
-.breadcrumb{
-
+.breadcrumb {
   .router-link-active {
-      color: black !important;
-      background-color: transparent !important;
-      font-weight: 600;
+    color: black !important;
+    background-color: transparent !important;
+    font-weight: 600;
   }
 }
 </style>

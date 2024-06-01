@@ -2,24 +2,30 @@
 
 // app colors
 $primary:#3B1437;
-$primary-hover:#3B1437;
+$primary-hover:#351232;
 $primary-light:#ebe8eb; 
-$primary-light-hover:#e2dce1; 
-$primary-Light-active: #c2b6c1;
+$primary-light-hover:#765b73 ;
+$primary-light-active: #c2b6c1;
 $brown : #686252 ; 
 $brown-light : #686252 ; 
 $sucess : #2FB350 ; 
 $danger : #BF2C24; 
+$gray : #7D7D7D;
 $info : #e7e7e7;  
 $error : rgb(255, 104, 104) ; 
+$yellow : #BF9900 ;
 //
-$border: #E4E4E4;
+$border: #CED1DC;
+$background-light : #f5f5f5;
+$padding-primary : 40px;
 //
-$raduis-base : 1.5rem;
+$raduis-base : 2rem;
 $raduis-md : 0.5rem;
 $raduis-lg : 1rem;
 //
-$height-input : 50px ; 
+$height-input : 56px ; 
+$height-button : 44px ; 
+
 
 
 
@@ -28,21 +34,17 @@ $height-input : 50px ;
     'primary': (
       'base': $primary,
       ),
-      'success' : (
-        'base': $sucess,
-      ),
-      'danger' : (
-        'base': $danger,
-      ),
-      'warning' : (
-        'base': $brown,
-      ),
-      'info' : (
-        'base': $primary-light,
-      ),
+      // 'success' : (
+      //   'base': $sucess,
+      // ),
+      // 'danger' : (
+      //   'base': $danger,
+      // ),
+      // 'warning' : (
+      //   'base': $brown,
+      // ),
       
-      
-     
+  
   ),
   $fill-color:(
     'dark' : $primary,
@@ -67,7 +69,6 @@ $height-input : 50px ;
     'padding' : 1rem , 
   ),
 
-
   $common-component-size :(
     'large' :  $height-input,
   ),
@@ -76,6 +77,11 @@ $height-input : 50px ;
     'padding' : 1rem , 
     'border' : none
   ),
+  $dialog : (
+    'title-font-size' : 24px  ,
+    'border-radius':  $raduis-base,
+  )
+
 
   
 );

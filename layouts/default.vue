@@ -4,64 +4,58 @@ section
       .nav
         Menu
     #main(:class="[fullNav && !mobile  ? 'marginedStart' : (mobile ? 'notMargined' :'collapseMargin' )] ")
-      nav.navbar(  :class="{'marginedStart': fullNav && !mobile,'collapseMargin': !mobile && !fullNav,'notMargined': mobile && !fullNav,'navbar-scroll': showNavbar}" class="!pt-4 z-20 navbar") 
+      nav.navbar(  :class="{'marginedStart': fullNav && !mobile,'collapseMargin': !mobile && !fullNav,'notMargined': mobile && !fullNav,'navbar-scroll': showNavbar}" class="!pt-4 z-20 ") 
         .flex.items-center.justify-between(:class="{'rtl:!pr-[32px] !pl-[32px] !pr-[120px] rtl:!pl-[120px] ' : !mobile , '!px-[20px] '  : mobile}")
           .headings
             button.toggle-icon(@click="openNav" :class="{'margined' : !fullNav}"): Icon.text-sm(name="ph:list-bold")
           .tools.flex.gap-3.items-center
             .lang-switcher  
-                a(:href="switchLocalePath(locale==='ar' ? 'en' :'ar')"): el-button(  round  ) {{ locale==='ar' ? 'English' : 'العربية'  }}
+              a(:href="switchLocalePath(locale==='ar' ? 'en' :'ar')")
+                     el-button(  round  ) 
+                        Icon.mx-1(name="ph:globe-simple")
+                        | {{ locale==='ar' ? 'English' : 'العربية'  }}
             el-dropdown(class="outline-0")
-                
                   div.flex.gap-2.items-center.outline-0.border-0 
-                        Avatar(src="/images/avatar.svg" small)
+                        Avatar(:src="user?.profilePicture" :text="user?.enFullName" small table )
                         .text 
-                            p.text-xs.font-medium Omar Abdulazeez
-                            p.text-xs.font-medium.opacity-50 Super admin
+                            p.text-sm.font-medium.mb-2 {{user?.enFullName}}
+                            p.text-xs.font-medium.opacity-50 {{ user?.email }}
                         Icon.text-xl(name="iconamoon:arrow-down-2")
                   template(#dropdown='')
                     el-dropdown-menu
+                        NuxtLink(:to="localePath('/profile')"): el-dropdown-item
+                            p.text-xs {{$t("profile")}}
                         el-dropdown-item(@click="logout")
-                            p.text-xs Logout
-                        el-dropdown-item
-                          p.text-xs(@click="router.push('/change-password')") Change password
-        .border-bottom.mt-4
+                            p.text-xs {{$t("logout")}}
+                   
+        .mt-4
       .slot-content(class="!mt-24" :class="{'rtl:!pr-[32px] !pl-[32px] !pr-[120px] rtl:!pl-[120px]' : !mobile, '!px-[20px] '  : mobile}")
-          .title.font-bold.text-xl.mb-1 {{  route.path.split("/").filter((n) => n&& n !== 'ar')[0] ? $t(formatTextWithyphen(route.path.split("/").filter((n) => n && n !== 'ar' )[0]).toLowerCase()) : $t('home')  }}
-          .breadCurmb.mb-4.flex.gap-1
-              Breadcramp(:key="breadkey")
           slot
 </template>
-
 <script setup lang="ts">
 import { useWindowSize } from "@vueuse/core";
 import { useAuthStore } from "~/stores/auth";
-const { localeProperties, locale, setLocale, tm, rt } = useI18n();
-
+const { locale, tm, rt, localeProperties } = useI18n();
+const auth = useAuthStore();
+const { user } = storeToRefs(auth);
+auth.setLocale(locale.value);
+const localePath = useLocalePath();
 const switchLocalePath = useSwitchLocalePath();
-const authStore = useAuthStore();
 import { storeToRefs } from "pinia";
 import { useMain } from "~/stores/common";
 const mainData = useMain();
 const { fullNav, mobile, hideNav } = storeToRefs(mainData);
 const { width, height } = useWindowSize();
 const router = useRouter();
-const breadkey = ref(0);
+
 const route = useRoute();
-await checkAuthority();
+// await auth.checkAuthority();
 
 useHead({
   htmlAttrs: {
     dir: localeProperties.value.dir,
   },
 });
-
-watch(
-  () => route.path,
-  () => {
-    breadkey.value++;
-  }
-);
 
 const showNavbar = ref(false);
 const showDropdown = ref(false);
@@ -79,24 +73,6 @@ onUnmounted(() => {
 const handleScroll = () => {
   showNavbar.value = window.scrollY > 10;
 };
-
-async function checkAuthority() {
-  console.log(authStore.token);
-  if (authStore.token) {
-    useGqlToken(authStore.token);
-    const { data } = await useAsyncGql("GetMe");
-    if (data.value.me.success === false) {
-      router.push("/login");
-      return;
-    }
-    mainData.$patch({
-      permissions: data.value.me.data.securityGroup.permissions,
-    });
-  } else if (!authStore.token) {
-    router.push("/login");
-    return;
-  }
-}
 
 if (process.client) {
   window.addEventListener("click", () => {
@@ -119,10 +95,9 @@ function openNav() {
     hideNav.value = !hideNav.value;
   }
 }
-
 function logout() {
-  localStorage.removeItem("acess_token");
-  router.push("/login");
+  localStorage.removeItem("access_token");
+  router.push(localePath("/auth/login"));
 }
 
 checkwidth();
@@ -133,6 +108,12 @@ watch(width, () => {
 </script>
 
 <style lang="scss" scoped>
+.website-body {
+  .slot-content {
+    padding: 0 !important;
+    margin-top: 4rem !important;
+  }
+}
 #main {
   height: fit-content;
   margin-top: 50px;
@@ -168,6 +149,7 @@ watch(width, () => {
   background-color: white;
   top: 0;
   left: 0;
+  border-bottom: 1px solid $border;
 }
 
 .top {

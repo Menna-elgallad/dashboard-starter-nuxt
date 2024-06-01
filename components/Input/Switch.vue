@@ -1,5 +1,5 @@
 <template lang="pug">
-el-form-item(:error='errorMessage' )
+el-form-item(:error='errorMessage'  )
     el-switch(size="large"  :inline-prompt="inside"  :active-text="activeText" :inactive-text="inactiveText" :placeholder='placeholder ? placeholder : $t("enter") + label' v-model='inputValue' :disabled="disabled" :name="name")
         template(#active-action='' v-if="activeIcon")
                 span.custom-active-action
@@ -20,7 +20,7 @@ const props = defineProps({
   },
   value: {
     type: String,
-    default: "",
+    default: false,
     required: false,
   },
 
@@ -70,10 +70,11 @@ const {
 } = useField(props.name, undefined, {
   initialValue: props.value ? props.value : false,
 });
-
-if (props.value) {
-  inputValue.value = props.value;
-}
+watchEffect(() => {
+  if (props.value) {
+    inputValue.value = props.value; // set value from parent
+  }
+});
 </script>
 
 <style lang="scss" scoped>

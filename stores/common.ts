@@ -98,7 +98,7 @@ function fileToDataUrl(file) {
   return new Promise((resolve, reject) => {
     if (!file) {
       reject("No file provided.");
-      return;
+      return; 
     }
 
     const reader = new FileReader();

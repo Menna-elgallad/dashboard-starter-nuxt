@@ -1,32 +1,21 @@
 <template lang="pug">
-el-form-item(:label="label" :error='errorMessage' class="!mb-6")
-  el-upload.w-fit.list-upload.avatar-uploader(v-model:file-list='inputValue' action='#' :name="name" :on-success="handleUploadSuccess"   v-loading="loading" :http-request="handleUploadRequest"  :before-upload="beforeUpload" list-type='picture-card' )
-    div.text-gray-400.text-center
-          el-icon.avatar-uploader-icon
-              Icon(:name="icon")
-          p.text-xs {{ t('browseOrDrag') }}
-          
-    template(#tip='')
+el-form-item(:label="label" :error='errorMessage' class="!mb-6 w-full")
+    el-upload.w-full(v-model:file-list='inputValue' :limit="limit" action='#' :name="name" :on-success="handleUploadSuccess" :class="{'upload-disabled-none' : limit===1 && inputValue.length}"  :before-upload="beforeUpload"   v-loading="loading" :http-request="handleUploadRequest"  )
+        .text-gray-400.text-xs
+            .el-icon.avatar-uploader-icon
+               Icon(:name="icon")
+            .el-upload__text.w-full
+                | {{$t('browseOrDrag') }}
+            
+        template(#tip='' )
             .el-upload__tip.flex.items-center.gap-1(v-if="note")
               Icon(name='iconamoon:information-circle')
               | {{note}}
-    template(#file='{ file }')
-      div.w-full
-        LazyImg.el-upload-list__item-thumbnail.m-auto(:src='file?.response' alt='')
-        span.el-upload-list__item-actions
-          span.el-upload-list__item-preview(@click='handlePictureCardPreview(file)')
-            el-icon
-              zoom-in
-          span.el-upload-list__item-delete(v-if='!disabled' @click='handleRemove(file)')
-            el-icon
-              delete
-  el-dialog(class='!bg-transparent  !shadow-none xl:!w-1/3 lg:!w-1/3 sm:!w-[90%] !w-full' v-model='dialogVisible')
-      LazyImg( :src='dialogImageUrl' alt='Preview Image') 
-
 </template>
 
 <script lang="ts" setup>
 import { Delete, Download, Plus, ZoomIn } from "@element-plus/icons-vue";
+import { UploadFilled } from "@element-plus/icons-vue";
 import type { UploadProps, UploadUserFile } from "element-plus";
 import type { UploadFile } from "element-plus";
 import { useField } from "vee-validate";
@@ -40,7 +29,7 @@ const props = defineProps({
   },
   value: {
     type: String,
-    default: "",
+    default: [],
     required: false,
   },
 
@@ -57,6 +46,14 @@ const props = defineProps({
     default: false,
     required: false,
   },
+  note: {
+    type: String,
+    default: "",
+  },
+
+  type: {
+    type: String,
+  },
   sizeInMb: {
     type: Number,
     default: 2, //2mb
@@ -70,10 +67,10 @@ const props = defineProps({
       // "image/webp",
       // "image/svg+xml",
     ],
-    required: false,
   },
-  type: {
-    type: String,
+  limit: {
+    type: Number,
+    default: null,
   },
 });
 
@@ -107,22 +104,10 @@ const handleUploadRequest = async (params: any) => {
   const { success, data } = await uploadFile("LECTURER_CV_FILE", params.file);
 
   loading.value = false;
-  return data;
-};
-
-const beforeUpload: UploadProps["beforeUpload"] = (rawFile) => {
-  if (!props.formats.includes(rawFile.type)) {
-    ElMessage.error({
-      message: `${t("acceptUpload")} ${props.formats
-        .map((format) => format.split("/").pop())
-        .join(" , ")}`,
-    });
-    return false;
-  } else if (rawFile.size / 1024 / 1024 > props.sizeInMb) {
-    ElMessage.error(t("uploadMaxSize") + props.sizeInMb + "MB");
-    return false;
+  if (!success) return;
+  else {
+    return runtimeConfig.public.BUCKET_URL + data;
   }
-  return true;
 };
 
 const handleRemove = (file: UploadFile) => {
@@ -132,8 +117,20 @@ const handleRemove = (file: UploadFile) => {
 const handleUploadSuccess: UploadProps["onSuccess"] = (
   response,
   uploadFile
-) => {
-  console.log(inputValue.value);
+) => {};
+const beforeUpload: UploadProps["beforeUpload"] = (rawFile) => {
+  if (!props.formats.includes(rawFile.type)) {
+    ElMessage.error({
+      message: `${t("acceptUpload")} ${props.formats
+        .map((format) => format.split("/").pop())
+        .join(" , ")}`,
+    });
+    return false;
+  } else if (rawFile.size / 1024 / 1024 > props.sizeInMb) {
+    ElMessage.error(`${t("uploadMaxSize")} ${props.sizeInMb} MB`);
+    return false;
+  }
+  return true;
 };
 
 const {
@@ -143,14 +140,17 @@ const {
   handleChange,
   meta,
 } = useField(props.name, undefined, {
-  initialValue: props.value ? props.value : [],
+  initialValue: props.value,
 });
-watchEffect(() => {
-  if (props.value) {
-    inputValue.value = props.value;
+watch(
+  () => props.value,
+  () => {
+    if (props.value) {
+      inputValue.value = props.value;
+    }
   }
-});
-if (props.value) {
+);
+if (props.value.length) {
   inputValue.value = props.value;
 }
 </script>
@@ -162,5 +162,14 @@ if (props.value) {
       border-radius: $raduis-base;
     }
   }
+}
+.upload-disabled-none {
+  .el-upload.el-upload--text {
+    display: none;
+  }
+}
+.el-upload__tip {
+  margin: 0 !important;
+  opacity: 50%;
 }
 </style>

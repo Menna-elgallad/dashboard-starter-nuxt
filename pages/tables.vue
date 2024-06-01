@@ -1,9 +1,11 @@
 <template lang="pug">
-AppTable(v-slot="{data}" :columns="table.columns" :data="table.data" :sortOptions="table.sort" @handleRowClick="handleRowClick"  )
-      tmeplate()
-        .flex.items-center.py-2
-          .toggle-icon 
-            Icon.text-md(name="IconEye" )
+div
+  Header
+  AppTable(v-slot="{data}" :columns="table.columns" :data="table.data" :sortOptions="table.sort" @handleRowClick="handleRowClick"  )
+        tmeplate()
+          .flex.items-center.py-2
+            .toggle-icon 
+              Icon.text-md(name="IconEye" )
 </template>
 
 <script setup lang="ts">

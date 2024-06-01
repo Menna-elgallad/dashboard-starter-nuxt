@@ -4,7 +4,7 @@
         
         .text(v-else)
             p.text-2xl.font-semibold(:class="{'big-text' : big }") {{ text[0].toUpperCase() }}
-        el-dialog(v-model='fileShow' class="file"  class="xl:!w-1/3 lg:!w-1/3 sm:!w-[90%] !w-full " align-center='' )
+        el-dialog(v-model='fileShow'  class="file xl:!w-1/3 lg:!w-1/3 sm:!w-[90%] !w-full " align-center='' )
                 LazyImg.m-auto(:src="src" :key="src" ) 
         
 </template>
@@ -18,7 +18,7 @@ const props = defineProps({
   bigger: Boolean,
   table: Boolean,
 });
-const emits = defineEmits(["showFile"]);
+
 const fileShow = ref(false);
 function showfile(file) {
   if (!props.table) {
